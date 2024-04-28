@@ -141,7 +141,7 @@ end_of_this:
 
 The new instructions used here have the following meaning:
 
-* ```jle``` _X_: jump if less than or equal_: a conditional jump to instruction _X_, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
+* ```jle``` _X_: _jump if less than or equal_: a conditional jump to instruction _X_, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
 
 * ```jmp``` _X_: an unconditional jump to instruction _X_.
 

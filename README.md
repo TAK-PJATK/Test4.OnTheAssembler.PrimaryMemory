@@ -1,7 +1,12 @@
 # Test4.OnTheAssembler.PrimaryMemory  
 
-[On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler)  
+[On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler) 
+
 [Primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#primary-memory)
+  [Types of primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#types-of-primary-memory)
+  [Hardware properties](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#hardware-properties)
+  [Cache](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#cache)
+  [Addressing RAM memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#addressing-ram-memory)
 
 # On the assembler
 

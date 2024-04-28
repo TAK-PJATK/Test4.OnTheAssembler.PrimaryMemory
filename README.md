@@ -1,5 +1,8 @@
 # Test4.OnTheAssembler.PrimaryMemory  
 
+[On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler)  
+[Primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#primary-memory)
+
 # On the assembler
 
 Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye, (On the other hand, this language is still way less intutive than e.g. C++ or Java),

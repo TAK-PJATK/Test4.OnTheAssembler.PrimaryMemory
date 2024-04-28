@@ -1,0 +1,21 @@
+#
+
+#
+
+double data rate — this means that data are sent twice as frequently as the nominal clock rate would suggest — that is, on the rising slope as well as on the falling slope of the clock signal (see the lecture “Integrated circuits”),
+
+Other important properties of the SDRAM type memory are:
+
+* interleaving — allows more than one read/write operation at a time;
+
+* returning data in the form of multi-byte chunks (which is desirable because, as soon as a particular memory cell is fetched, its neighbors are also likely to be soon needed).
+
+During its evolution, DDR SDRAM has existed in the following configurations:
+
+* DDR SDRAM (bandwidth: from 1,600 MB/s to 3,200 MB/s);
+
+* DDR2 SDRAM (bandwidth: from 3,200MB/s to 8,533MB/s);
+
+* DDR3 SDRAM (bandwidth: from 6,400MB/s to 19,200MB/s);
+
+* DDR4 SDRAM (bandwidth: from 12,800MB/s to 25,600MB/s);

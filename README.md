@@ -206,13 +206,11 @@ While the _physical_ localization of the area of RAM granted to a particular pro
 
 In such address space, we distinguish several areas with a specified purpose, size and access mode. (These areas are often called **segments**, although that term happens to have different interpretations in various contexts).
 
-[![](main-8.jpg)
-](https://docs.google.com/document/d/1rLAaLXATR7-Dao2n7R1tL9baciFs54WJzJBUntkhFe0/edit?usp=sharing)
-**Figure 1.** The typical layout of the address space of a process in the x86 architecture.
-
-As it dates back to the times of 32-bit addressing, the space of available addresses has size 2<sup>32</sup> B = 4 GiB.
-
-The code and data segments (whose size is known upfront at the start of program execution) are located in the lowest address ranges: the stack and heap segments (which grow dynamically as the process executes) are placed on the opposite sides of the remaining free place — which leaves maximum elasticity in memory management. Byconvent ion, the heap takes the lower addresses and grows upwards, while the stack takes the highest addresses and grows downwards.
+![The typical layout of the address space of a process in the x86 architecture.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Figure1AddressSpace.PNG?raw=true)
+     
+  **Figure 1.** The typical layout of the address space of a process in the x86 architecture.
+  As it dates back to the times of 32-bit addressing, the space of available addresses has size 2<sup>32</sup> B = 4 GiB.
+  The code and data segments (whose size is known upfront at the start of program execution) are located in the lowest address ranges: the stack and heap segments (which grow dynamically as the process executes) are placed on the opposite sides of the remaining free place — which leaves maximum elasticity in memory management. Byconvent ion, the heap takes the lower addresses and grows upwards, while the stack takes the highest addresses and grows downwards.
 
 * The **code segment** contains the machine code of the process (loaded into RAM to let the processor fetch consecutive instructions efficiently). This segment is available to the process in a read-only fashion (which is enforced by the MMU); this protects programs against accidentally modifying their own code, (That is a trace of Harvard architecture; see the lecture “Computer structure").
 
@@ -329,7 +327,9 @@ pop ecx
 pop eax
 ret
 ```
-https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true
+
+![back-up just before the call vs. back-up just after the call](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true)
+
 The key things here are to ensure that:
 
 * backing up (along at least one of the above strategies) altogether covers _every_ register whose obscuring by a called subroutine could affect the correctness of the whole program;  
@@ -532,7 +532,8 @@ The memory assigned to a process is split into a few **segments**, whose specifi
 
 To obtain the **logical address** corresponding to a given virtual address, we need to look up the base address of the selected segment in the segment descriptor table, and then add the offset to it.
 
-https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Segmentation.PNG?raw=true
+[Segmentation in the Intel 80386 processor.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Segmentation.PNG?raw=true)  
+
 **Figure 1**. Segmentation in the Intel 80386 processor.  
 
 At this point, however, we need to make three disclaimers:  
@@ -552,10 +553,10 @@ If the programmer needs to specify the segment selector explicitly, they can use
 
 Let us recall that the logical address should not be confused with the **physical address**, which specifies the actual placement of data in RAM. After all, as every process uses its own logical addresses between 0 and 4 GiB, various processes will generally operate on the same logical addresses, corresponding to different physical addresses. To translate the logical address into the physical one, we use a **page table** for the current process, maintained and stored by the operating system. The basic idea of translation using paging looks as follows:  
 
-[![](main-18.jpg)
-](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
-    **Figure 2.** The overall idea of paging.  
-    Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
+[![The overall idea of paging.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
+
+  **Figure 2.** The overall idea of paging.  
+  Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
 
 What can be seen here is a split of the process address space into **pages** of a fixed size (typically 4kiB), and the split of RAM into **frames** of the same size.  
   

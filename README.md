@@ -1,9 +1,9 @@
 # Test4 On the assembler & Primary memory  
 
 [On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler) 
-[PDF](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/on_the_assembler.pdf)  
+[:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/on_the_assembler.pdf)  
 
-[Primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#primary-memory) [PDF](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/primary_memory.pdf)  
+[Primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#primary-memory) [:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/primary_memory.pdf)  
  
 &nbsp;&nbsp;&nbsp;&nbsp;[Types of primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#types-of-primary-memory)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Hardware properties](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#hardware-properties)  

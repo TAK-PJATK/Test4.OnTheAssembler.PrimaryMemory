@@ -90,7 +90,7 @@ This contains the following new instructions:
 
     — in CF: 1, if the first value was lower than the second one; 0 otherwise,
 
-* jne X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be cheeked via the value of the flag ZF),
+* ```jne``` X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be cheeked via the value of the flag ZF),
 
 This means that the above code corresponds to the following code in Java (or C++):
 

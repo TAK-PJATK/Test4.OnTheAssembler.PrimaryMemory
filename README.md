@@ -2,29 +2,29 @@
 
 # On the assembler
 
-Our today’s topic will be the basics of assembler, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye, (On the other hand, this language is still way less intutive than e.g. C++ or Java),
+Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye, (On the other hand, this language is still way less intutive than e.g. C++ or Java),
 
-The goal of this lecture is not to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assmebler code and understand what they do. Such passive knowledge is even more important given that snippets of assmebler code can be found in the “most low-level” among the popular programming languages (e.g, C), Therefore, even those who are not strictly assembler programmers may have a need to understand such code.
+The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assmebler code and understand what they do. Such passive knowledge is even more important given that snippets of assmebler code can be found in the “most low-level” among the popular programming languages (e.g, C), Therefore, even those who are not strictly assembler programmers may have a need to understand such code.
 
 ## Introductory remarks
 
 ### The x86 architecture
 
-The diversity of existing processor architectures leads to diversity of assmeblers. Here, we will focus on the — clearly most popular — x86 architecture. For this one, programmers can choose among a few variants of assmebler which differ by various language aspects; in the examples below, we will use the syntax of a popular open-source assembler, NASM,
+The diversity of existing processor architectures leads to diversity of assmeblers. Here, we will focus on the — clearly most popular — **x86 architecture**. For this one, programmers can choose among a few variants of assmebler which differ by various language aspects; in the examples below, we will use the syntax of a popular open-source assembler, **NASM** ([Netwide Assembler](https://www.thenewwiki.com/wiki/Netwide_Assembler)).
 
-Before describing the language itself, let us discuss what is the x86 family of processors and why it is so important.
+Before describing the language itself, let us discuss what is the _x86 family_ of processors and why it is so important.
 
-The first model from this family, Intel 8086 from year 1978, was used in the first generally available personal computers. Comparing to earlier processor models, it included multiple innovations (more registers, changes in memory management, increased efficiency). All of this made Intel 8086 a very important model. This, in turn, created a demand for subsequent processor models to have a backwards compatible architecture, i.e, that their instruction set should support all programs which used to work on Intel 8086, Thanks to this, the assmeblers for the x86 architecture generate programs which can run on various processors. This involves not only Intel models, but also those from other manufacturers, including the second important market player, AMD, However, not everything is unified. For example, the sets of available registers may differ across x86 processors, which also leads to some differences in supported assmebler instructions. Moreover, even the operating system (Windows/Linux/another) can influence certain assembler instructions. Still, the general philosophy of the language and most of the instructions remain common.
+The first model from this family, Intel 8086 from year 1978, was used in the first generally available personal computers. Comparing to earlier processor models, it included multiple innovations (more registers, changes in memory management, increased efficiency). All of this made Intel 8086 a very important model. This, in turn, created a demand for subsequent processor models to have a backwards compatible architecture, i.e, that their instruction set should support all programs which used to work on Intel 8086. Thanks to this, the assmeblers for the x86 architecture generate programs which can run on various processors. This involves not only Intel models, but also those from other manufacturers, including the second important market player, AMD. However, not everything is unified. For example, the sets of available registers may differ across x86 processors, which also leads to some differences in supported assmebler instructions. Moreover, even the operating system (Windows/Linux/another) can influence certain assembler instructions. Still, the general philosophy of the language and most of the instructions remain common.  
 
-### Distinctive language properties
+### Distinctive language properties  
 
-The structure of an assembler program has much in common with programs known from more popular languages: basically, a program is a sequence of instructions, often taking arguments which can be e.g, constants, registers (the simplest counterpart of variables), or more complex memory references (somewhat analogous to arrays, pointers etc,).
+The structure of an assembler program has much in common with programs known from more popular languages: basically, a program is a sequence of **instructions**, often taking **arguments** which can be e.g, constants, registers (the simplest counterpart of variables), or more complex memory references (somewhat analogous to arrays, pointers etc.).  
 
-On the other hand, the assembler syntax does not contain some constructs which are fundamental for higher-level languages (while, in assembler, the necessary functionality must be “built piece by piece” from instructions with more simplistic meaning). Two examples of such “painful omissions” are:
+On the other hand, the assembler syntax does not contain some constructs which are fundamental for higher-level languages (while, in assembler, the necessary functionality must be “built piece by piece” from instructions with more simplistic meaning). Two examples of such “painful omissions” are:  
 
-* an almost complete lack of arithmetic expressions — instead of writing e.g. a \* (b \+ c), we will have to achieve the necessary value through individual arithmetic instructions;
+* an almost complete lack of arithmetic expressions — instead of writing e.g. a \* (b \+ c), we will have to achieve the necessary value through individual arithmetic instructions;  
 
-* lack of basic flow control instructions like if, for, while — in assembler, the necessary flow control is achieved with various jump instructions (including conditional and unconditional ones).
+* lack of basic flow control instructions like if, for, while — in assembler, the necessary flow control is achieved with various jump instructions (including conditional and unconditional ones).  
 
 ## Simple examples
 
@@ -396,7 +396,7 @@ By doing this, we may slow down cache access by up to D times, in exchange for i
 
 * We increase the value size of cache entries to 2K bytes (typically, K is 6 or 7),
 
-This trick increases the chance of related data coexisting in the cache (as programmers often use data arrays, or sets of variables that had been allocated next to each other, etc,). It also decreases the fraction of cache capacity “wasted” on storing the source addresses.
+This trick increases the chance of related data coexisting in the cache (as programmers often use data arrays, or sets of variables that had been allocated next to each other, etc.). It also decreases the fraction of cache capacity “wasted” on storing the source addresses.
 
 In practice: if we want to get the A\-th byte of RAM, we transform A to the appropriate index of a 2K\-bvte memory cell (result: “the (A/2K)-th cell”), determine the appropriate index in the cache (result: (A/2K) [2](#bookmark6)/, 2N), and — if a cache hit occurred — pick the (A % 2K)-th byte of the cached value.
 

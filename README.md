@@ -206,8 +206,8 @@ While the _physical_ localization of the area of RAM granted to a particular pro
 
 In such address space, we distinguish several areas with a specified purpose, size and access mode. (These areas are often called **segments**, although that term happens to have different interpretations in various contexts).
 
-![](main-8.jpg)
-
+[![](main-8.jpg)
+](https://docs.google.com/document/d/1rLAaLXATR7-Dao2n7R1tL9baciFs54WJzJBUntkhFe0/edit?usp=sharing)
 **Figure 1.** The typical layout of the address space of a process in the x86 architecture.
 
 As it dates back to the times of 32-bit addressing, the space of available addresses has size 2<sup>32</sup> B = 4 GiB.
@@ -227,7 +227,7 @@ Although such description might sound a bit enigmatic, in practice — due to th
 
 ### Memory references
 
-In NASM. the basic way of referring to RAM cells is to put their addresses (of course, the logical ones[1](#bookmark11)) in **square brackets**. For example:
+In NASM. the basic way of referring to RAM cells is to put their addresses (of course, the logical one) in **square brackets**. For example:
 
 * mov \[_N_\] , ```ecx```: stores the value of register ecx under address _N_;
 
@@ -329,7 +329,7 @@ pop ecx
 pop eax
 ret
 ```
-
+https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true
 The key things here are to ensure that:
 
 * backing up (along at least one of the above strategies) altogether covers _every_ register whose obscuring by a called subroutine could affect the correctness of the whole program;  
@@ -391,7 +391,6 @@ The operations described above also have counterparts in higher-level languages 
 
 * in case of C/C++ ease of handling bit masks: e.g. many functions from the operating system library accept numeric arguments in which each bit carries its own meaning; in such case, bitwise operations significantly simplify managing such information.
 
-[1](#footnote1)
 More strictly, it may happen that the number N will not be interpreted directly as a logical address (the cell index in the process address space) but as a relative address to some base address (e.g. the beginning of the data segment). This, however, has no impact on our considerations in the following part of this lecture.
 
 # Primary memory  
@@ -448,7 +447,6 @@ During its evolution, DDR SDRAM has existed in the following configurations:
 * DDR3 SDRAM (bandwidth: from 6,400 MB/s to 19,200 MB/s);  
 * DDR4 SDRAM (bandwidth: from 12,800 MB/s to 25,600 MB/s);  
 * DDR5 SDRAM (bandwidth: from 25,600 MB/s to 57,600 MB/s);  
-• DDR5 SDRAM (bandwidth: from 25,600MB/s to 57,600MB/s).  
   
 Unlike cache, DDR SDRAM is a separate integrated circuit, which makes it possible to take it out from a computer and replace by another; often it’s also possible to extend the existing RAM modules with additional ones. However, there are some technical limitations here. Physically, the memory is inserted into the _motherboard_ which ensures communication between the computer components. Clearly, one cannot insert more RAM modules than the number of available memory ports. Another limitation comes from the processor, which is designed with an upper bound of supportable memory size. Also, not all processors / motherboards can support DDR4, Otherwise, a DDR4 module can be placed in a computer, though it will behave as DDR3 (which matters e.g, for the voltage input; DDR4 is capable of operating on a lower voltage, leading to reduced heat and increased performance).  
 
@@ -534,7 +532,7 @@ The memory assigned to a process is split into a few **segments**, whose specifi
 
 To obtain the **logical address** corresponding to a given virtual address, we need to look up the base address of the selected segment in the segment descriptor table, and then add the offset to it.
 
-
+https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Segmentation.PNG?raw=true
 **Figure 1**. Segmentation in the Intel 80386 processor.  
 
 At this point, however, we need to make three disclaimers:  
@@ -554,8 +552,8 @@ If the programmer needs to specify the segment selector explicitly, they can use
 
 Let us recall that the logical address should not be confused with the **physical address**, which specifies the actual placement of data in RAM. After all, as every process uses its own logical addresses between 0 and 4 GiB, various processes will generally operate on the same logical addresses, corresponding to different physical addresses. To translate the logical address into the physical one, we use a **page table** for the current process, maintained and stored by the operating system. The basic idea of translation using paging looks as follows:  
 
-![](main-18.jpg)
-
+[![](main-18.jpg)
+](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
     **Figure 2.** The overall idea of paging.  
     Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
 
@@ -568,7 +566,7 @@ On the other hand, paging brings another kind of problem, the **internal fragmen
 ### Multi-level paging  
   
 A single-level page table turns out to be an overly simplistic technique, especially when we look at its memory consumption. If the address space of a process (4GiB) is split into pages of size 4kiB, and each page descriptor takes e.g. 24 bits, then the page table for a single process will take 3MiB, and all the tables for all currently running processes — often over 1 GiB! In such case, a common solution is to apply **multi-level paging**, in which the page table itself is subject to additional paging. For example, two-level paging proceeds as shown below:
-
+https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/TwoLevelPaging.PNG?raw=true
     **Figure 3.** Two-level paging in the Intel 80386 processor.  
 
 A disadvantage of this solution is the increase of access time: by using _n_-level paging, reaching the desired RAM address may require altogether _n_ + 1 read operations from that memory. (Generally, page tables are placed in RAM; however, due to how frequently they are referenced, processors contain a dedicated cache for them, called **TLB**, _translation lookaside buffers_). However, the main advantage of multi-level paging is more efficient management of memory used for page tables: those not used might not exist at all, and those used rarely can be safely sent back to secondary memory (see below).  

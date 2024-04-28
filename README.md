@@ -1,4 +1,4 @@
-# Test4 On the assembler & Primary memory  
+# Test 4. On the assembler & Primary memory  
 
 [On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler) 
 [:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/on_the_assembler.pdf)  

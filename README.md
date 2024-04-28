@@ -22,9 +22,9 @@ The structure of an assembler program has much in common with programs known fro
 
 On the other hand, the assembler syntax does not contain some constructs which are fundamental for higher-level languages (while, in assembler, the necessary functionality must be “built piece by piece” from instructions with more simplistic meaning). Two examples of such “painful omissions” are:  
 
-* an almost complete lack of arithmetic expressions — instead of writing e.g. a \* (b \+ c), we will have to achieve the necessary value through individual arithmetic instructions;  
+* an almost complete lack of arithmetic expressions — instead of writing e.g. a \* (b \+ c), we will have to achieve the necessary value through individual arithmetic _instructions_;  
 
-* lack of basic flow control instructions like if, for, while — in assembler, the necessary flow control is achieved with various jump instructions (including conditional and unconditional ones).  
+* lack of basic flow control instructions like — in assembler, the necessary flow control is achieved with various _jump_ instructions (including _conditional_ and _unconditional_ ones).  
 
 ## Simple examples
 
@@ -32,19 +32,26 @@ On the other hand, the assembler syntax does not contain some constructs which a
 
 ![](main-1.png)
 
-The above code contains registers eax, ebx, ecx, and the following instructions:
+The above code contains registers ```eax```, ```ebx```, ```ecx```, and the following instructions:
 
-* mov X Y: stores into register X the value described by Y (e.g, a numeric constant, or the value of another register);
+* ```mov``` X Y: stores into register X the value described by Y (e.g, a numeric constant, or the value of another register);
 
-* sub X Y: subtracts tom the value of X the value described by Y, and stores the result back into X;
+* ```sub``` X Y: subtracts tom the value of X the value described by Y, and stores the result back into X;
 
-* imul X Y: mutliples the values of X and Y, and stores the result back into X,
+* ```imul``` X Y: mutliples the values of X and Y, and stores the result back into X,
 
-Generally, the convention in ,\\ ASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assmeblers, that role is played by the last argument).
+Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assmeblers, that role is played by the last argument).
 
 This means that the above code corresponds to the following code in Java (or C++):
 
-![](main-2.png)
+```
+  mov    eax , 1
+  mov    ebx , 2
+  mov    ecx , 3
+  imul   ebx , ecx
+  sub    eax , ebx
+  imul   eax , eax
+```
 
 in which the variables a, b, c correspond, respectively, to registers eax, ebx, ecx, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be (1-2\*3) \*( 1-2\*3), which is 25).
 
@@ -54,25 +61,40 @@ Notably, while in languages like Java/C++ the programmer can use nearly arbitrar
 
 Loops in assembler must be built using conditional jump instructions. Here is an example (explained below):
 
-![](main-3.png)
+```
+    mov eax , 0
+    mov ecx , 10
+start_of_the_loop:
+    add eax , ecx
+    dec ecx
+    cmp ecx , 0
+    jne start_of_the_loop
+```
 
 This contains the following new instructions:
 
-* add: adds two registers; stores the result in the first of them;
+* ```add```: adds two registers; stores the result in the first of them;
 
-* dec: decreases the value of the given register by 1;
+* ```dec```: decreases the value of the given register by 1;
 
-* cmp: compares the two given values; stores the information about results in the appropriate flag registers:
+* ```cmp```: compares the two given values; stores the information about results in the appropriate flag registers:
 
-— in ZF: 1, if the compared values were equal; 0, if they were different;
+    — in ZF: 1, if the compared values were equal; 0, if they were different;
 
-— in CF: 1, if the first value was lower than the second one; 0 otherwise,
+    — in CF: 1, if the first value was lower than the second one; 0 otherwise,
 
 * jne X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be cheeked via the value of the flag ZF),
 
 This means that the above code corresponds to the following code in Java (or C++):
 
-![](main-4.png)
+```
+int sum = 0;
+int i = 10;
+do {
+  sum += i;
+  i--;
+} while (i != 0);
+```
 
 in which the variable sum corresponds to the register eax, and i corresponds to ecx.
 
@@ -80,37 +102,72 @@ in which the variable sum corresponds to the register eax, and i corresponds to 
 
 Now, consider the following code in Java (or C++):
 
-![](main-5.png)
+```
+if (eax > ebx)
+  ecx = ebx;
+else
+  ecx = eax - ebx;
+```
 
 Although the assembler does not contain instructions like if, still, similarly as for loops, such behavior can be obtained with a conditional jump instruction. Below, we show a sample “translation“ of this code to the assembler language:
 
-![](main-6.png)
+```
+    cmp eax,   ebx
+    jle another_case
+    mov ecx,   ebx
+    jmp end_of_this
+another_case:
+    mov ecx,   eax
+    sub ecx,   ebx
+end_of_this:
+```
 
 The new instructions used here have the following meaning:
 
-* jle X: jump if less than or equal: a conditional jump to instruction X, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
+* ```jle``` _X_: jump if less than or equal_: a conditional jump to instruction _X_, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
 
-* jmp X: an unconditional jump to instruction X,
+* ```jmp``` _X_: an unconditional jump to instruction _X_.
 
 ### Subroutines
 
-A subroutine (also called: subprogram, procedure, function) is a piece of program code which may be invoked many times during the execution of a program, and moreover — importantly — these invocations may happen from various locations in the code, and yet, after each invocation, the execution will return to the place from which the invocation was made.
+A **subroutine** (also called: subprogram, procedure, function) is a piece of program code which may be **invoked** many times during the execution of a program, and moreover — importantly — these invocations may happen **from various locations** in the code, and yet, after each invocation, the execution will _return_ to the place from which the invocation was made.  
 
-Thus, a non-example of a subroutine is the content of a while loop (even though it can be executed many times). Examples of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called methods).
+Thus, a _non-example_ of a subroutine is the content of a ```while``` loop (even though it can be executed many times). _Examples_ of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called _methods_).  
 
-Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: uneodintional jumps to an instruction specified by its address, and existence of an instruction pointer register (eip). However, since the x86 architecture does not offer a direct programmer access to register eip, instead one has to use special instructions which hide the details from the programmer:
+Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: uncodintional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (```eip```). However, since the x86 architecture does not offer a direct programmer access to register ```eip```, instead one has to use special instructions which hide the details from the programmer:
 
-* call X: make a subroutine cal! to the label X, which means:
+* ```call``` _X_: make a **subroutine call** to the label _X_, which means:
 
-—    jump (unconditionally) to X
+—    jump (unconditionally) to _X_
 
-—    also, store in a special place (specifically — on the stack which will be described later in this lecture) the return address, i.e, the address to which the execution should jump back, after executing the subroutine is finished, (It is the address of the instruction directly following the call instruction),
+—    also, store in a special place (specifically — on the _stack_ which will be described later in this lecture) the **return address**, i.e. the address to which the execution should jump back, after executing the subroutine is finished. (It is the address of the instruction_ directly following_ the call instruction).
 
-* ret: make the return jump, that is: jump (unconditionally) to the most recently stored return address, (Also, clean up the just-used information about the return address).
+* ```ret```: make the return jump, that is: jump (unconditionally) to the most recently stored return address. (Also, clean up the just-used information about the return address).
 
-Let us consider an example. Suppose that we have some code resulting in printing out the value of ecx to the screen. Then, the following code will print, in order, the values 1, 2, 2, 3:
+Let us consider an example. Suppose that we have some code resulting in printing out the value of ```ecx``` to the screen. Then, the following code will print, in order, the values 1, 2, 2, 3:
 
-![](main-7.png)
+```
+1    jmp start_there  
+2    
+3  our_printer:  
+4    // some code (details omitted)
+5    // printing out the value of ecx
+6    // to the screen
+7    ret  
+8
+9  our_double_printer:
+10    call our_printer  
+11    call our_printer  
+12    ret
+13
+14  start_there:
+15    mov  ecx, 1
+16    call our_printer
+17    mov  ecx, 2
+18    call our_double_printer
+19    mov  ecx, 3
+20    call our_printer
+```
 
 Executing this code will proceed as follows:
 

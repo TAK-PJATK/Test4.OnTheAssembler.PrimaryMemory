@@ -556,70 +556,45 @@ Let us recall that the logical address should not be confused with the **physica
 
 ![](main-18.jpg)
 
-**Figure 2.** The overall idea of paging.
+    **Figure 2.** The overall idea of paging.  
+    Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
 
-Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
+What can be seen here is a split of the process address space into **pages** of a fixed size (typically 4kiB), and the split of RAM into **frames** of the same size.  
+  
+By introducing a fixed page size, the operating system can grant memory to processes according to their changing needs, assigning individual frames to individual processes (and to some logical addresses in their address spaces) in a _completely uneonstrained_ manner. This removes the problem known as **external memory fragmentation**, i.e. the scenario in which the free space in RAM memory gets split into so many smaller parts that some requests for a contiguous memory block cannot be served even though the request block size is smaller than the total amount of free memory. To the contrary, paging ensures that, as long as free memory exists at all, it is available in the form of free frames, and moreover, free frames have a suitable format for serving memory requests.  
 
-What can be seen here is a split of the process address space into pages of a fixed size (typically 4kiB), and the split of RAM into frames of the same size.
+On the other hand, paging brings another kind of problem, the **internal fragmentation**: the amount of memory granted to a process is equal to its actual need but rounded up (to a whole number of pages); therefore, the rounding margin is effectively wasted. Therefore, choosing the page size involves a trade-off between reducing internal fragmentation (for which we!d prefer smaller pages) and reducing memory footprint of the page table (for which larger pages are better).  
 
-By introducing a fixed page size, the operating system can grant memory to processes according to their changing needs, assigning individual frames to individual processes (and to some logical addresses in their address spaces) in a completely uneonstrained manner. This removes the problem known as external memory fragmentation, i.e. the scenario in which the free space in RAM memory gets split into so many smaller parts that some requests for a contiguous memory block cannot be served even though the request block size is smaller than the total amount of free memory. To the contrary, paging ensures that, as long as free memory exists at all, it is available in the form of free frames, and moreover, free frames have a suitable format for serving memory requests.
+### Multi-level paging  
+  
+A single-level page table turns out to be an overly simplistic technique, especially when we look at its memory consumption. If the address space of a process (4GiB) is split into pages of size 4kiB, and each page descriptor takes e.g. 24 bits, then the page table for a single process will take 3MiB, and all the tables for all currently running processes — often over 1 GiB! In such case, a common solution is to apply **multi-level paging**, in which the page table itself is subject to additional paging. For example, two-level paging proceeds as shown below:
 
-On the other hand, paging brings another kind of problem, the internal fragmentation: the amount of memory granted to a process is equal to its actual need but rounded up (to a whole number of pages); therefore, the rounding margin is effectively wasted. Therefore, choosing the page size involves a trade-off between reducing internal fragmentation (for which we!d prefer smaller pages) and reducing memory footprint of the page table (for which larger pages are better).
+    **Figure 3.** Two-level paging in the Intel 80386 processor.  
 
-Multi-level paging
+A disadvantage of this solution is the increase of access time: by using _n_-level paging, reaching the desired RAM address may require altogether _n_ + 1 read operations from that memory. (Generally, page tables are placed in RAM; however, due to how frequently they are referenced, processors contain a dedicated cache for them, called **TLB**, _translation lookaside buffers_). However, the main advantage of multi-level paging is more efficient management of memory used for page tables: those not used might not exist at all, and those used rarely can be safely sent back to secondary memory (see below).  
 
-A single-level page table turns out to be an overly simplistic technique, especially when we look at its memory consumption. If the address space of a process (4GiB) is split into pages of size 4kiB, and each page descriptor takes e.g. 24 bits, then the page table for a single process will take 3MiB, and all the tables for all currently running processes — often over 1 GiB! In such case, a common solution is to apply multi-level paging, in which the page table itself is subject to additional paging. For example, two-level paging proceeds as shown below:
-
-![](main-19.jpg)
-
-A disadvantage of this solution is the increase of access time: by using n-level paging, reaching the desired RAM address may require altogether n + 1 read operations from that memory. (Generally, page tables are placed in RAM; however, due to how frequently they are referenced, processors contain a dedicated cache for them, called TLB, translation lookaside buffers). However, the main advantage of multi-level paging is more efficient management of memory used for page tables: those not used might not exist at all, and those used rarely can be safely sent back to secondary memory (see below).
-
-The modern x86 processors use 4 or 5 levels of paging.
+The modern x86 processors use **4 or 5 levels** of paging.  
 
 ### Virtualization
 
-One advantage of paging already known to us is solving the problem of external memory fragmentation. However, paging also brings additional opportunities, among which the crucial one is the so-called memory virtualization. This technique allows referring to a total amount of RAM memory (by which we mean the total size of address spaces of all processes) larger than its physical capacity! Such “cheating" is possible thanks to the fact that the frames of data which do not fit into RAM are in fact stored in the secondary memory (e.g. on the hard drive) and brought back to RAM when needed.
+One advantage of paging already known to us is solving the problem of external memory fragmentation. However, paging also brings additional opportunities, among which the crucial one is the so-called **memory virtualization**. This technique allows _referring_ to a total amount of RAM memory (by which we mean the total size of address spaces of all processes) larger than its physical capacity! Such “cheating" is possible thanks to the fact that the frames of data which do not fit into RAM are in fact stored in the secondary memory (e.g. on the hard drive) and brought back to RAM when needed.  
 
-In the virtualized setup, fetching data from RAM engages the processor MMU as well as the operating system. To decide where the data should be fetched from (RAM or hard drive?), we use additional information stored in page descriptors. These contain in particular the present bit, specifying whether the page is available in RAM. If not (which means it should be retrieved from the hard drive), the processor generates a page fault interrupt, bringing control to the operating system, which manages fetching the appropriate frame from the hard drive to RAM. After such fetching, the page is now placed in the main memory, so we need to update its descriptor in the page table (in particular, store the new physical address, and flip the present bit).
+In the virtualized setup, fetching data from RAM engages the processor MMU as well as the operating system. To decide where the data should be fetched from (RAM or hard drive?), we use additional information stored in page descriptors. These contain in particular the **present bit**, specifying whether the page is available in RAM. If not (which means it should be retrieved from the hard drive), the processor generates a **page fault interrupt**, bringing control to the operating system, which manages fetching the appropriate frame from the hard drive to RAM. After such fetching, the page is now placed in the main memory, so we need to update its descriptor in the page table (in particular, store the new physical address, and flip the present bit).  
 
-This leads to another problem: when fetching a new page to the RAM, where should it be placed? It must replace another page, and clearly, the best one to replace would be one that is not going to be used anymore, which may exist for various reasons (e.g. because another process has just finished executing, or because its local data are no longer live, e.g. as a result of freeing previously allocated memory). To allow detecting such eases, page descriptors contain the use bit controlled by the operating system.
+This leads to another problem: when fetching a new page to the RAM, _where_ should it be placed? It must replace another page, and clearly, the best one to replace would be one that is not going to be used anymore, which may exist for various reasons (e.g. because another process has just finished executing, or because its local data are no longer live, e.g. as a result of freeing previously allocated memory). To allow detecting such eases, page descriptors contain the **use bit** controlled by the operating system.
 
-However, the operating system will not always find an unused location in the RAM, If there’s no free space while we fetch a new page, we must pick another least necessary page to be sent back to the hard drive. The problem of choosing a least necessary page is complex and can be solved with various techniques. The following are the simplest strategies for this:
+However, the operating system will not always find an unused location in the RAM, If there’s no free space while we fetch a new page, we must pick another _least necessary_ page to be sent back to the hard drive. The problem of choosing a _least necessary_ page is complex and can be solved with various techniques. The following are the simplest strategies for this:  
 
-* FIFO (First In First Out) — always send back the page which has been fetched longest time ago;
+* **FIFO** (_First In First Out_) — always send back the page which has been fetched longest time ago;  
 
-* LRU (Least Recently Used) — send back the page which has been used longest time ago;
+* **LRU** (_Least Recently Used_) — send back the page which has been used longest time ago;  
 
-* LFU (Least Frequently Used) — equip each page with a reference counter, initialized when the page is fetched and incremented on every reference to that page; send back the page for which the reference counter has the lowest value.
+* **LFU** (_Least Frequently Used_) — equip each page with a _reference counter_, initialized when the page is fetched and incremented on every reference to that page; send back the page for which the reference counter has the lowest value.  
 
-The above paragraph contains multiple simplifications but it (hopefully) shows the main idea behind memory virtualization. Unfortunately, describing the details of choosing pages and exchanging them between the hard drive and RAM is out of scope of this course.
+The above paragraph contains multiple simplifications but it (hopefully) shows the main idea behind memory virtualization. Unfortunately, describing the details of choosing pages and exchanging them between the hard drive and RAM is out of scope of this course.  
 
 ### Virtualization vs. caching
 
-Note that the main idea of caching — moving data between a larger slower memory (M) and a smaller faster one (C) — does take place also in case of virtualization: this time, RAM plays the role of C, and M is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special ease of caching.
+Note that the main idea of caching — moving data between a larger slower memory (_M_) and a smaller faster one (_C_) — does take place also in case of virtualization: this time, RAM plays the role of _C_, and _M_ is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special ease of caching.  
 
-The purpose of caching is accelerating the access to memory M, by introducing C as a buffer. This affects just the efficiency; no cache would mean working just with M, which would be slower but would still work. The case of virtualization is different: the data in M (on a hard drive) are useless unless they are fetched to smaller memory C (RAM), and the goal of the whole mechanism is to improve scalability of the system (i.e, enable executing more processes at a time, and assigning a larger total amount of memory to those proeessess) at the cost of efficiency.
-
-[1](#footnote1)
-
-   double data rate — this means that data are sent twice as frequently as the nominal clock rate would suggest — that is, on the rising slope as well as on the falling slope of the clock signal (see the lecture “Integrated circuits”),
-
-Other important properties of the SDRAM type memory are:
-
-* interleaving — allows more than one read/write operation at a time;
-
-* returning data in the form of multi-byte chunks (which is desirable because, as soon as a particular memory cell is fetched, its neighbors are also likely to be soon needed).
-
-During its evolution, DDR SDRAM has existed in the following configurations:
-
-* DDR SDRAM (bandwidth: from 1,600 MB/s to 3,200 MB/s);
-
-* DDR2 SDRAM (bandwidth: from 3,200MB/s to 8,533MB/s);
-
-* DDR3 SDRAM (bandwidth: from 6,400MB/s to 19,200MB/s);
-
-* DDR4 SDRAM (bandwidth: from 12,800MB/s to 25,600MB/s);
-
-[2](#footnote2)
-
-   Finally, to reduce memory footprint, we equip each cache entry no longer with the full source address but rather with its non-obvious prefix (omitting the last N + K bits, which in practice makes up about a half of the total address length).
+The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those proeessess) at the cost of efficiency.  

@@ -373,9 +373,9 @@ In the assembler, the standard Boolean operator names typically represent bitwis
 
 will result in clearing (i.e, setting to zero) the sixth rightmost bit in register ```eax``` (and leaving all the other bits unchanged). The same action can be written even more concisely:
 
-```and ax , ~32```
+```and ax , ```<sup>~</sup>```32```
 
-where ```~``` denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation ```0...00100000```, its bitwise negation gives exactly ```1...11011111```).   
+where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation ```0...00100000```, its bitwise negation gives exactly ```1...11011111```).   
 
 The above code may have a practical application. In the ASCII encoding (described on the lecture “Encoding data”), the uppercase characters differ from their lowercase counterparts only by the sixth rightmost bit value (e.g. ```A``` \= 65, ```a``` \= 97). Therefore, the above code just converts characters to their uppercase versions.  
 

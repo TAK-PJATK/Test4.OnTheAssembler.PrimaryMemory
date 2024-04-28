@@ -532,7 +532,7 @@ The memory assigned to a process is split into a few **segments**, whose specifi
 
 To obtain the **logical address** corresponding to a given virtual address, we need to look up the base address of the selected segment in the segment descriptor table, and then add the offset to it.
 
-[Segmentation in the Intel 80386 processor.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Segmentation.PNG?raw=true)  
+![Segmentation in the Intel 80386 processor.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Segmentation.PNG?raw=true)  
 
 **Figure 1**. Segmentation in the Intel 80386 processor.  
 
@@ -553,7 +553,7 @@ If the programmer needs to specify the segment selector explicitly, they can use
 
 Let us recall that the logical address should not be confused with the **physical address**, which specifies the actual placement of data in RAM. After all, as every process uses its own logical addresses between 0 and 4 GiB, various processes will generally operate on the same logical addresses, corresponding to different physical addresses. To translate the logical address into the physical one, we use a **page table** for the current process, maintained and stored by the operating system. The basic idea of translation using paging looks as follows:  
 
-[![The overall idea of paging.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
+![The overall idea of paging.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
 
   **Figure 2.** The overall idea of paging.  
   Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
@@ -567,8 +567,9 @@ On the other hand, paging brings another kind of problem, the **internal fragmen
 ### Multi-level paging  
   
 A single-level page table turns out to be an overly simplistic technique, especially when we look at its memory consumption. If the address space of a process (4GiB) is split into pages of size 4kiB, and each page descriptor takes e.g. 24 bits, then the page table for a single process will take 3MiB, and all the tables for all currently running processes — often over 1 GiB! In such case, a common solution is to apply **multi-level paging**, in which the page table itself is subject to additional paging. For example, two-level paging proceeds as shown below:
-https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/TwoLevelPaging.PNG?raw=true
-    **Figure 3.** Two-level paging in the Intel 80386 processor.  
+
+![Two-level paging in the Intel 80386 processor.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/TwoLevelPaging.PNG?raw=true)
+  **Figure 3.** Two-level paging in the Intel 80386 processor.  
 
 A disadvantage of this solution is the increase of access time: by using _n_-level paging, reaching the desired RAM address may require altogether _n_ + 1 read operations from that memory. (Generally, page tables are placed in RAM; however, due to how frequently they are referenced, processors contain a dedicated cache for them, called **TLB**, _translation lookaside buffers_). However, the main advantage of multi-level paging is more efficient management of memory used for page tables: those not used might not exist at all, and those used rarely can be safely sent back to secondary memory (see below).  
 

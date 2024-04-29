@@ -393,7 +393,7 @@ In the assembler, the standard Boolean operator names typically represent bitwis
 
 will result in clearing (i.e. setting to zero) the sixth rightmost bit in register ```eax``` (and leaving all the other bits unchanged). The same action can be written even more concisely:
 
-```and ax , ```<sup>~</sup>```32```
+```and ax, ```<sup>~</sup>```32```
 
 where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation ```0...00100000```, its bitwise negation gives exactly ```1...11011111```).   
 
@@ -402,14 +402,14 @@ The above code may have a practical application. In the ASCII encoding (describe
 A standard application of bitwise operations is zeroing a register by the use of xor, for example:  
 
 ```
-xor eax , eax
+xor eax, eax
 ```
 
 clears the value of ```eax```. That way of coding it is obviously less human-readable than ```mov eax, 0```; however, it turns out to be more efficient (or, simply put, faster). This is the main reason for using bitwise operations in the assembler code.  
 
 Another type of operations worth mentioning here are the **bit shifts**, which append a given number of zeros to the binary representation of a number, either from the left or from the right. For example:  
 
-```shl eax , 3```  
+```shl eax, 3```  
 
 results in “shifting the value of ```eax``` by 3 bits to the left”, that is, appending three zeros on the right: for example, 101<sub>(2)</sub> = 5 will turn into 101000<sub>(2)</sub> = 40, And conversely, shifting 40 by 3 bits to the right will produce 5. Hence, at least as long as we don’t face any arithmetic overflows, these operations are equivalent to multiplication or (integer) division by 2<sup>3</sup>. In practice, though, **several variants** of bit shifts have been defined which differ exactly in the treatment of arithmetic overflows.  
 

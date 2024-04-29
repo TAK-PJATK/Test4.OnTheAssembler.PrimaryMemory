@@ -237,7 +237,7 @@ Although such description might sound a bit enigmatic, in practice — due to th
 
 In NASM. the basic way of referring to RAM cells is to put their addresses (of course, the logical one) in **square brackets**. For example:
 
-* mov \[_N_\] , ```ecx```: stores the value of register ecx under address _N_;
+* mov \[_N_\], ```ecx```: stores the value of register ecx under address _N_;
 
 * ```mov ecx```, \[_N_\]: fetches into register ecx the value from address _N_.  
   
@@ -346,7 +346,7 @@ The key things here are to ensure that:
 
 * in case when back-up involves multiple values (like ```eax```, ```ecx```, ```edx``` in the above example) — the order of restoring them from the stack should be reverse to the order of pushing them there (following the LIFO rule);
 
-* the stack content at the end of a subroutine (just before ```ret```) should be **indentical** with its content at the start of that subroutine (just after ```call```) — which is necessary for properly retrieving the return address from the top of the stack.  
+* the stack content at the end of a subroutine (just before ```ret```) should be **identical** with its content at the start of that subroutine (just after ```call```) — which is necessary for properly retrieving the return address from the top of the stack.  
 (For that reason, it would be unacceptable e.g. to push ```eax``` to the stack on the calling side but pop it back in the called subroutine code).  
 
 ## Other instructions  
@@ -393,7 +393,7 @@ Another type of operations worth mentioning here are the **bit shifts**, which a
 
 results in “shifting the value of ```eax``` by 3 bits to the left”, that is, appending three zeros on the right: for example, 101<sub>(2)</sub> = 5 will turn into 101000<sub>(2)</sub> = 40, And conversely, shifting 40 by 3 bits to the right will produce 5. Hence, at least as long as we don’t face any arithmetic overflows, these operations are equivalent to multiplication or (integer) division by 2<sup>3</sup>. In practice, though, **several variants** of bit shifts have been defined which differ exactly in the treatment of arithmetic overflows.  
 
-The operations described above also have counterparts in higher-level languages (typically denoted by ```&```, ```|```, ```~```, ``<<``` and ```>>```). While in older times they were often used for optimizing programs, currently their importance in this regard has decreased — as optimizations of this kind have become a task for compilers, or even for the processor itself. Yet, bitwise operations and bit shifts still appear in high-level language code, for several reasons:  
+The operations described above also have counterparts in higher-level languages (typically denoted by ```&```, ```|```, ```~```, ```<<``` and ```>>```). While in older times they were often used for optimizing programs, currently their importance in this regard has decreased — as optimizations of this kind have become a task for compilers, or even for the processor itself. Yet, bitwise operations and bit shifts still appear in high-level language code, for several reasons:  
 
 * historical grounds: some programmers are used to exploiting them;  
 

@@ -41,12 +41,14 @@ On the other hand, the assembler syntax does not contain some constructs which a
 ### An arithmetic expression
 
 ```
+
   mov    eax, 1
   mov    ebx, 2
   mov    ecx, 3
   imul   ebx, ecx
   sub    eax, ebx
   imul   eax, eax
+
 ```
 
 The above code contains registers ```eax```, ```ebx```, ```ecx```, and the following instructions:

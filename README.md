@@ -357,10 +357,8 @@ ret
 </table>
 
 <p align="center">
-  <img src="https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true" width="90%" />
+  <img alt="back-up just before the call vs. back-up just after the call" src="https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true" width="90%" />
 </p>
-
-![back-up just before the call vs. back-up just after the call](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true)
 
 The key things here are to ensure that:
 

@@ -12,19 +12,19 @@
 
 # On the assembler
 
-Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye, (On the other hand, this language is still way less intutive than e.g. C++ or Java),
+Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye, (On the other hand, this language is still way less intuitive than e.g. C++ or Java),
 
-The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assmebler code and understand what they do. Such passive knowledge is even more important given that snippets of assmebler code can be found in the “most low-level” among the popular programming languages (e.g, C), Therefore, even those who are not strictly assembler programmers may have a need to understand such code.
+The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assembler code and understand what they do. Such passive knowledge is even more important given that snippets of assembler code can be found in the “most low-level” among the popular programming languages (e.g, C), Therefore, even those who are not strictly assembler programmers may have a need to understand such code.
 
 ## Introductory remarks
 
 ### The x86 architecture
 
-The diversity of existing processor architectures leads to diversity of assmeblers. Here, we will focus on the — clearly most popular — **x86 architecture**. For this one, programmers can choose among a few variants of assmebler which differ by various language aspects; in the examples below, we will use the syntax of a popular open-source assembler, **NASM** ([Netwide Assembler](https://www.thenewwiki.com/wiki/Netwide_Assembler)).
+The diversity of existing processor architectures leads to diversity of assemblers. Here, we will focus on the — clearly most popular — **x86 architecture**. For this one, programmers can choose among a few variants of assembler which differ by various language aspects; in the examples below, we will use the syntax of a popular open-source assembler, **NASM** ([Netwide Assembler](https://www.thenewwiki.com/wiki/Netwide_Assembler)).
 
 Before describing the language itself, let us discuss what is the _x86 family_ of processors and why it is so important.
 
-The first model from this family, Intel 8086 from year 1978, was used in the first generally available personal computers. Comparing to earlier processor models, it included multiple innovations (more registers, changes in memory management, increased efficiency). All of this made Intel 8086 a very important model. This, in turn, created a demand for subsequent processor models to have a backwards compatible architecture, i.e, that their instruction set should support all programs which used to work on Intel 8086. Thanks to this, the assmeblers for the x86 architecture generate programs which can run on various processors. This involves not only Intel models, but also those from other manufacturers, including the second important market player, AMD. However, not everything is unified. For example, the sets of available registers may differ across x86 processors, which also leads to some differences in supported assmebler instructions. Moreover, even the operating system (Windows/Linux/another) can influence certain assembler instructions. Still, the general philosophy of the language and most of the instructions remain common.  
+The first model from this family, Intel 8086 from year 1978, was used in the first generally available personal computers. Comparing to earlier processor models, it included multiple innovations (more registers, changes in memory management, increased efficiency). All of this made Intel 8086 a very important model. This, in turn, created a demand for subsequent processor models to have a backwards compatible architecture, i.e. that their instruction set should support all programs which used to work on Intel 8086. Thanks to this, the assemblers for the x86 architecture generate programs which can run on various processors. This involves not only Intel models, but also those from other manufacturers, including the second important market player, AMD. However, not everything is unified. For example, the sets of available registers may differ across x86 processors, which also leads to some differences in supported assembler instructions. Moreover, even the operating system (Windows/Linux/another) can influence certain assembler instructions. Still, the general philosophy of the language and most of the instructions remain common.  
 
 ### Distinctive language properties  
 
@@ -59,7 +59,7 @@ The above code contains registers ```eax```, ```ebx```, ```ecx```, and the follo
 
 * ```imul``` _X Y_: mutliples the values of _X_ and _Y_, and stores the result back into _X_,
 
-Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assmeblers, that role is played by the last argument).
+Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assemblers, that role is played by the last argument).
 
 This means that the above code corresponds to the following code in Java (or C++):
 
@@ -72,7 +72,7 @@ a = a - b;
 a = a * a;
 ```
 
-in which the variables a, b, c correspond, respectively, to registers ```eax```, ```ebx```, ```ecx```, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be ```(1-2*3)*( 1-2*3)```, which is 25).
+in which the variables a, b, c correspond, respectively, to registers ```eax```, ```ebx```, ```ecx```, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be ```(1-2*3)*(1-2*3)```, which is 25).
 
 Notably, while in languages like Java/C++ the programmer can use nearly arbitrary variable names (of course assuming they have been properly declared), in assembler the available registers are restricted to a fixed set (which we already described in the lecture “Processor and programs”). If these registers do not suffice to hold all necessary data (which happens very often), the data must be somehow stored in the RAM memory, outside registers — of which some examples will be shown later.
 
@@ -81,12 +81,13 @@ Notably, while in languages like Java/C++ the programmer can use nearly arbitrar
 Loops in assembler must be built using conditional jump instructions. Here is an example (explained below):
 
 ```
-    mov eax , 0
-    mov ecx , 10
+
+    mov eax, 0
+    mov ecx, 10
 start_of_the_loop:
-    add eax , ecx
+    add eax, ecx
     dec ecx
-    cmp ecx , 0
+    cmp ecx, 0
     jne start_of_the_loop
 ```
 
@@ -102,7 +103,7 @@ This contains the following new instructions:
 
     — in CF: 1, if the first value was lower than the second one; 0 otherwise,
 
-* ```jne``` X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be cheeked via the value of the flag ZF),
+* ```jne``` X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be checked via the value of the flag ZF),
 
 This means that the above code corresponds to the following code in Java (or C++):
 
@@ -153,7 +154,7 @@ A **subroutine** (also called: subprogram, procedure, function) is a piece of pr
 
 Thus, a _non-example_ of a subroutine is the content of a ```while``` loop (even though it can be executed many times). _Examples_ of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called _methods_).  
 
-Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: uncodintional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (```eip```). However, since the x86 architecture does not offer a direct programmer access to register ```eip```, instead one has to use special instructions which hide the details from the programmer:
+Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: unconditional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (```eip```). However, since the x86 architecture does not offer a direct programmer access to register ```eip```, instead one has to use special instructions which hide the details from the programmer:
 
 * ```call``` _X_: make a **subroutine call** to the label _X_, which means:
   
@@ -191,15 +192,15 @@ Executing this code will proceed as follows:
 
 * We run line 1, which causes a jump to line 14 (```start_there```). No subroutines touched so far,
 
-* In line 15, we set ```ecx``` to 1, and then in line 16 we call ```our_printer```. The return address points to the instruction which we will want to run after the subroutine ends — in this ease, it is line 17, The processor stores that address (on that stack), and then jumps to the label ```our_printer``` (line 3),
+* In line 15, we set ```ecx``` to 1, and then in line 16 we call ```our_printer```. The return address points to the instruction which we will want to run after the subroutine ends — in this case, it is line 17, The processor stores that address (on that stack), and then jumps to the label ```our_printer``` (line 3),
 
 * Lines 4, 5, 6 print out “1” on the screen,
 
-* Line 7 jumps to the return address, which is line 17, Now, we finished our first subroutine call,
+* Line 7 jumps to the return address, which is line 17. Now, we finished our first subroutine call.
 
 * Line 17 sets ```ecx``` to 2, and then line 18 calls ```our_double_printer``` (with return address 19). There, in turn, in line 10, we make another call to ```our_printer``` (with return address 11). Thus, we have here a subroutine call **inside** another subroutine! This means that we need to remember **multiple return addressess** at once: “after this subroutine, return to line 11; after _the preceding one_, return to line 19”. Hence, the return addresses naturally form a stack structure — and that’s why they must be stored in such way.
 
-* After printing “2” for the first time, the ret from line 7 jumps to the return address (11), at the same time pops that value from the stack, to uncover the previously pushed return address associated with calling ```our_double_printer``` (19).  
+* After printing “2” for the first time, the ```ret``` from line 7 jumps to the return address (11), at the same time pops that value from the stack, to uncover the previously pushed return address associated with calling ```our_double_printer``` (19).  
 Executing line 11 leads to printing “2” once again, returning to line 12 and popping the return address 12 from the stack.
 
 * Now, line 12 (```ret```) will make the return jump to the address on the top of the stack, which is currently 19.  
@@ -222,13 +223,13 @@ In such address space, we distinguish several areas with a specified purpose, si
      
   **Figure 1.** The typical layout of the address space of a process in the x86 architecture.
   As it dates back to the times of 32-bit addressing, the space of available addresses has size 2<sup>32</sup> B = 4 GiB.
-  The code and data segments (whose size is known upfront at the start of program execution) are located in the lowest address ranges: the stack and heap segments (which grow dynamically as the process executes) are placed on the opposite sides of the remaining free place — which leaves maximum elasticity in memory management. Byconvent ion, the heap takes the lower addresses and grows upwards, while the stack takes the highest addresses and grows downwards.
+  The code and data segments (whose size is known upfront at the start of program execution) are located in the lowest address ranges: the stack and heap segments (which grow dynamically as the process executes) are placed on the opposite sides of the remaining free place — which leaves maximum elasticity in memory management. By convention, the heap takes the lower addresses and grows upwards, while the stack takes the highest addresses and grows downwards.
 
-* The **code segment** contains the machine code of the process (loaded into RAM to let the processor fetch consecutive instructions efficiently). This segment is available to the process in a read-only fashion (which is enforced by the MMU); this protects programs against accidentally modifying their own code, (That is a trace of Harvard architecture; see the lecture “Computer structure").
+* The **code segment** contains the machine code of the process (loaded into RAM to let the processor fetch consecutive instructions efficiently). This segment is available to the process in a read-only fashion (which is enforced by the MMU); this protects programs against accidentally modifying their own code. (That is a trace of Harvard architecture; see the lecture “Computer structure").
 
-* The **data segment** stores data (constans as well as variables) which are **statically allocated**, i.e, those data for which we want to reserve place in memory _for the whole timespan_ of process execution. (In particular, this means that the size of this segment is known upfront when starting the process). For example, it will contain global variables in a C++ program, as well as _static variables_ in a Java program.  
+* The **data segment** stores data (constans as well as variables) which are **statically allocated**, i.e. those data for which we want to reserve place in memory _for the whole timespan_ of process execution. (In particular, this means that the size of this segment is known upfront when starting the process). For example, it will contain global variables in a C++ program, as well as _static variables_ in a Java program.  
 
-• The **heap** and the **stack** provide place for the **dynamically allocated** data, i.e. those data which_ turn out_ to require storing only _during_ program execution. The difference between them can be summarized as follows:
+• The **heap** and the **stack** provide place for the **dynamically allocated** data, i.e. those data which _turn out_ to require storing only _during_ program execution. The difference between them can be summarized as follows:
 
   —    The **stack** stores data which can be organized in the so-called **LIFO** manner (_last in, first out_), that is: whenever a new value is _pushed_ to the _top_ of the stack, it will be _popped_ (i.e. removed) from there earlier than any other values already currently present on the stack.  
 Although such description might sound a bit enigmatic, in practice — due to the natural process of organizing the code into subroutines — the stack structure is fit for storing all kinds of **subroutine local data**, that is: data whose lifetime ends at the moment of exiting a subroutine.  
@@ -237,7 +238,7 @@ Although such description might sound a bit enigmatic, in practice — due to th
 
 ### Memory references
 
-In NASM. the basic way of referring to RAM cells is to put their addresses (of course, the logical one) in **square brackets**. For example:
+In NASM, the basic way of referring to RAM cells is to put their addresses (of course, the logical one) in **square brackets**. For example:
 
 * mov \[_N_\], ```ecx```: stores the value of register ecx under address _N_;
 
@@ -289,7 +290,7 @@ In the x86 architecture, the **stack grows downwards** (i.e. towards lower addre
 
 The above conventions allow treating the stack as an array, with the starting address stored in ```rsp```. Therefore, to read the value of the top element of the stack, it suffices to write ```[rsp]```. As the stack is often composed of 8-byte entries, ```[rsp+8]``` will often mean the “next top” element, etc.  
 
-For an assembler programmer, the stack is a convenient **temporary storage** for intermediate computation results in ease when we run out of available registers. However, its **fundamental application** is storing all the relevant register and flag values in ease of a **subroutine call**.  
+For an assembler programmer, the stack is a convenient **temporary storage** for intermediate computation results in casee when we run out of available registers. However, its **fundamental application** is storing all the relevant register and flag values in case of a **subroutine call**.  
   
 In an earlier part of this lecture, we described how the stack is used to store the “obscured” return addresses — however, an analogous problem (and a solution to it offered by the stack) involves the general-purpose registers. For example, consider the following Java code:  
 
@@ -310,7 +311,7 @@ void start() {
 
 In this code, the values of variables ```a``` and ```b``` in function start are respectively 2 and 5. However, during execution of ```our_function```, these are temporarily **obscured** by respective 3 and 4 — until we exit the call to ```our_function```. After returning to start, the previous values of ```a``` and ```b``` will be restored — thanks to the fact that the compiler was able to associate the names ```a```, ```b``` with distinct memory addresses, depending on which function is currently executed.  
   
-A similar problem occurs in the assmebler: here, also, a subroutine that has been just called can e.g, freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assmebler, names like ```ebx``` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
+A similar problem occurs in the assembler: here, also, a subroutine that has been just called can e.g, freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assembler, names like ```ebx``` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
 
 Moreover, while the abovementioned stack management of return addresses happens “automatically”, as a side effect of the ```call``` and ```ret``` instructions, it is generally a **programmer’s responsibility** to back up the general-purpose registers! As a result, the assembler code often contains — depending on the convention followed — whole “back-up sections” appearing either _just before_ or _just after_ making a subroutine call:
 
@@ -355,7 +356,7 @@ The key things here are to ensure that:
 
 ### System calls  
 
-The examples discussed so far did not include a typical initial example featured in programming courses — a program printing out “Hello World!” to the screen. That has a reason: there is no assmebler program which would achieve this on an arbitrary operating system. Printing to the screen (and generally — the whole input/output communication) is realized with **system calls** (_syscalls_), i.e. special kinds of processor **interrupts** (described in the lecture “Processor and programs”) for which a handler has been defined to pass the control to the operating system code, to let the system take the necessary actions.  
+The examples discussed so far did not include a typical initial example featured in programming courses — a program printing out “Hello World!” to the screen. That has a reason: there is no assembler program which would achieve this on an arbitrary operating system. Printing to the screen (and generally — the whole input/output communication) is realized with **system calls** (_syscalls_), i.e. special kinds of processor **interrupts** (described in the lecture “Processor and programs”) for which a handler has been defined to pass the control to the operating system code, to let the system take the necessary actions.  
 
 Similarly, the responsibility of operating system also includes managing memory allocations on the **heap** (which is significantly more difficult than for the stack, as the necessary memory size is not known upfront, and moreover, the unpredictable order of freeing up allocated data leads to “holes” of unused memory appearing, and operating system support is needed to “fill” them). Therefore, reserving and freeing up memory on the heap also requires making syscalls, and consequently, it looks significantly differently e.g, between Windows and Unix platforms.
 
@@ -373,7 +374,7 @@ In the assembler, the standard Boolean operator names typically represent bitwis
 
 ```and ax, 1111111111011111```
 
-will result in clearing (i.e, setting to zero) the sixth rightmost bit in register ```eax``` (and leaving all the other bits unchanged). The same action can be written even more concisely:
+will result in clearing (i.e. setting to zero) the sixth rightmost bit in register ```eax``` (and leaving all the other bits unchanged). The same action can be written even more concisely:
 
 ```and ax , ```<sup>~</sup>```32```
 
@@ -401,7 +402,7 @@ The operations described above also have counterparts in higher-level languages 
 
 * code clarity: ```1 << 17``` may look more legibly than ```131072```, or ```(int) Math.pow(2, 17)```;  
 
-* in case of C/C++ ease of handling bit masks: e.g. many functions from the operating system library accept numeric arguments in which each bit carries its own meaning; in such case, bitwise operations significantly simplify managing such information.
+* in case of C/C++ case of handling bit masks: e.g. many functions from the operating system library accept numeric arguments in which each bit carries its own meaning; in such case, bitwise operations significantly simplify managing such information.
 
 More strictly, it may happen that the number N will not be interpreted directly as a logical address (the cell index in the process address space) but as a relative address to some base address (e.g. the beginning of the data segment). This, however, has no impact on our considerations in the following part of this lecture.
 
@@ -440,7 +441,7 @@ The RAM memory, clearly the largest component of primary memory, is manufactured
 
 * _random-access memory_ — this means that data can be accessed in an arbitrary (random) order; the opposite to this is memory with _sequential access_, which requires that data are read in some specific order;  
 
-* _dynamic_ — this means that memory needs periodic refreshing its content (i.e, reading each memory cell and writing it back to the same place);  
+* _dynamic_ — this means that memory needs periodic refreshing its content (i.e. reading each memory cell and writing it back to the same place);  
 
 * _synchronous_ — this means that the access to memory is regulated with the system clock, as opposed to _asynchronous_ memory in which the access is regulated by internal memory signals;  
 
@@ -536,7 +537,7 @@ We will now discuss the topic of memory addressing. As explained in the lecture 
 
 We have already came across segmentation in the lecture “On the assembler”.  
 
-The memory assigned to a process is split into a few **segments**, whose specifications (starting address, size, access mode) are stored in the **segment descriptor table**. The **virtual address** — the one which can be used by an assmebler programmer — consists of two parts:  
+The memory assigned to a process is split into a few **segments**, whose specifications (starting address, size, access mode) are stored in the **segment descriptor table**. The **virtual address** — the one which can be used by an assembler programmer — consists of two parts:  
 
 * the **segment selector** (specifying that the desired value belongs e.g, to the code segment)  
 
@@ -593,7 +594,7 @@ One advantage of paging already known to us is solving the problem of external m
 
 In the virtualized setup, fetching data from RAM engages the processor MMU as well as the operating system. To decide where the data should be fetched from (RAM or hard drive?), we use additional information stored in page descriptors. These contain in particular the **present bit**, specifying whether the page is available in RAM. If not (which means it should be retrieved from the hard drive), the processor generates a **page fault interrupt**, bringing control to the operating system, which manages fetching the appropriate frame from the hard drive to RAM. After such fetching, the page is now placed in the main memory, so we need to update its descriptor in the page table (in particular, store the new physical address, and flip the present bit).  
 
-This leads to another problem: when fetching a new page to the RAM, _where_ should it be placed? It must replace another page, and clearly, the best one to replace would be one that is not going to be used anymore, which may exist for various reasons (e.g. because another process has just finished executing, or because its local data are no longer live, e.g. as a result of freeing previously allocated memory). To allow detecting such eases, page descriptors contain the **use bit** controlled by the operating system.
+This leads to another problem: when fetching a new page to the RAM, _where_ should it be placed? It must replace another page, and clearly, the best one to replace would be one that is not going to be used anymore, which may exist for various reasons (e.g. because another process has just finished executing, or because its local data are no longer live, e.g. as a result of freeing previously allocated memory). To allow detecting such cases, page descriptors contain the **use bit** controlled by the operating system.
 
 However, the operating system will not always find an unused location in the RAM, If there’s no free space while we fetch a new page, we must pick another _least necessary_ page to be sent back to the hard drive. The problem of choosing a _least necessary_ page is complex and can be solved with various techniques. The following are the simplest strategies for this:  
 
@@ -607,6 +608,6 @@ The above paragraph contains multiple simplifications but it (hopefully) shows t
 
 ### Virtualization vs. caching
 
-Note that the main idea of caching — moving data between a larger slower memory (_M_) and a smaller faster one (_C_) — does take place also in case of virtualization: this time, RAM plays the role of _C_, and _M_ is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special ease of caching.  
+Note that the main idea of caching — moving data between a larger slower memory (_M_) and a smaller faster one (_C_) — does take place also in case of virtualization: this time, RAM plays the role of _C_, and _M_ is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special case of caching.  
 
-The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those proeessess) at the cost of efficiency.  
+The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those processess) at the cost of efficiency.  

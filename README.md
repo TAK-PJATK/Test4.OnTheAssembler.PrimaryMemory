@@ -32,9 +32,9 @@ The structure of an assembler program has a lot in common with programs known fr
 
 On the other hand, the assembler syntax does not contain some constructs which are fundamental for higher-level languages (while, in assembler, the necessary functionality must be “built piece by piece” from instructions with more simplistic meaning). Two examples of such “painful omissions” are:  
 
-* an almost complete lack of arithmetic expressions — instead of writing e.g. ```a * (b + c)```, we will have to achieve the necessary value through individual arithmetic _instructions_;  
+* an almost complete lack of arithmetic expressions — instead of writing e.g. `a * (b + c)`, we will have to achieve the necessary value through individual arithmetic _instructions_;  
 
-* lack of basic flow control instructions like ```if```, ```for```, ```while``` — in assembler, the necessary flow control is achieved with various _jump_ instructions (including _conditional_ and _unconditional_ ones).  
+* lack of basic flow control instructions like `if`, `for`, `while` — in assembler, the necessary flow control is achieved with various _jump_ instructions (including _conditional_ and _unconditional_ ones).  
 
 ## Simple examples
 
@@ -51,13 +51,13 @@ On the other hand, the assembler syntax does not contain some constructs which a
 
 ```
 
-The above code contains registers ```eax```, ```ebx```, ```ecx```, and the following instructions:
+The above code contains registers `eax`, `ebx`, `ecx`, and the following instructions:
 
-* ```mov``` _X Y_: stores into register _X_ the value described by _Y_ (e.g, a numeric constant, or the value of another register);
+* `mov` _X Y_: stores into register _X_ the value described by _Y_ (e.g, a numeric constant, or the value of another register);
 
-* ```sub``` _X Y_: subtracts tom the value of _X_ the value described by _Y_, and stores the result back into _X_;
+* `sub` _X Y_: subtracts tom the value of _X_ the value described by _Y_, and stores the result back into _X_;
 
-* ```imul``` _X Y_: mutliples the values of _X_ and _Y_, and stores the result back into _X_,
+* `imul` _X Y_: mutliples the values of _X_ and _Y_, and stores the result back into _X_,
 
 Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assemblers, that role is played by the last argument).
 
@@ -72,7 +72,7 @@ a = a - b;
 a = a * a;
 ```
 
-in which the variables a, b, c correspond, respectively, to registers ```eax```, ```ebx```, ```ecx```, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be ```(1-2*3)*(1-2*3)```, which is 25).
+in which the variables a, b, c correspond, respectively, to registers `eax`, `ebx`, `ecx`, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be `(1-2*3)*(1-2*3)`, which is 25).
 
 Notably, while in languages like Java/C++ the programmer can use nearly arbitrary variable names (of course assuming they have been properly declared), in assembler the available registers are restricted to a fixed set (which we already described in the lecture “Processor and programs”). If these registers do not suffice to hold all necessary data (which happens very often), the data must be somehow stored in the RAM memory, outside registers — of which some examples will be shown later.
 
@@ -93,17 +93,17 @@ start_of_the_loop:
 
 This contains the following new instructions:
 
-* ```add```: adds two registers; stores the result in the first of them;
+* `add`: adds two registers; stores the result in the first of them;
 
-* ```dec```: decreases the value of the given register by 1;
+* `dec`: decreases the value of the given register by 1;
 
-* ```cmp```: compares the two given values; stores the information about results in the appropriate flag registers:
+* `cmp`: compares the two given values; stores the information about results in the appropriate flag registers:
 
     — in ZF: 1, if the compared values were equal; 0, if they were different;
 
     — in CF: 1, if the first value was lower than the second one; 0 otherwise,
 
-* ```jne``` X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be checked via the value of the flag ZF),
+* `jne` X: jump if not equal: makes a conditional jump to instruction X (here described with the label start\_of\_loop), on the condition that the previously executed comparison instruction resulted in “not equal” (which can be checked via the value of the flag ZF),
 
 This means that the above code corresponds to the following code in Java (or C++):
 
@@ -144,26 +144,26 @@ end_of_this:
 
 The new instructions used here have the following meaning:
 
-* ```jle``` _X_: _jump if less than or equal_: a conditional jump to instruction _X_, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
+* `jle` _X_: _jump if less than or equal_: a conditional jump to instruction _X_, on the condition that one of the flags CF, ZF contains value 1 (which means: in the previously executed comparison, the first value was lower than or equal to the second one);
 
-* ```jmp``` _X_: an unconditional jump to instruction _X_.
+* `jmp` _X_: an unconditional jump to instruction _X_.
 
 ### Subroutines
 
 A **subroutine** (also called: subprogram, procedure, function) is a piece of program code which may be **invoked** many times during the execution of a program, and moreover — importantly — these invocations may happen **from various locations** in the code, and yet, after each invocation, the execution will _return_ to the place from which the invocation was made.  
 
-Thus, a _non-example_ of a subroutine is the content of a ```while``` loop (even though it can be executed many times). _Examples_ of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called _methods_).  
+Thus, a _non-example_ of a subroutine is the content of a `while` loop (even though it can be executed many times). _Examples_ of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called _methods_).  
 
-Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: unconditional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (```eip```). However, since the x86 architecture does not offer a direct programmer access to register ```eip```, instead one has to use special instructions which hide the details from the programmer:
+Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: unconditional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (`eip`). However, since the x86 architecture does not offer a direct programmer access to register `eip`, instead one has to use special instructions which hide the details from the programmer:
 
-* ```call``` _X_: make a **subroutine call** to the label _X_, which means:
+* `call` _X_: make a **subroutine call** to the label _X_, which means:
   
 &nbsp;&nbsp;&nbsp;&nbsp;—    jump (unconditionally) to _X_  
 &nbsp;&nbsp;&nbsp;&nbsp;—    also, store in a special place (specifically — on the _stack_ which will be described later in this lecture) the **return address**, i.e. the address to which the execution should jump back, after executing the subroutine is finished. (It is the address of the instruction _directly following_ the call instruction).  
   
-* ```ret```: make the return jump, that is: jump (unconditionally) to the most recently stored return address. (Also, clean up the just-used information about the return address).
+* `ret`: make the return jump, that is: jump (unconditionally) to the most recently stored return address. (Also, clean up the just-used information about the return address).
 
-Let us consider an example. Suppose that we have some code resulting in printing out the value of ```ecx``` to the screen. Then, the following code will print, in order, the values 1, 2, 2, 3:
+Let us consider an example. Suppose that we have some code resulting in printing out the value of `ecx` to the screen. Then, the following code will print, in order, the values 1, 2, 2, 3:
 
 ```
 1    jmp start_there  
@@ -190,20 +190,20 @@ Let us consider an example. Suppose that we have some code resulting in printing
 
 Executing this code will proceed as follows:
 
-* We run line 1, which causes a jump to line 14 (```start_there```). No subroutines touched so far,
+* We run line 1, which causes a jump to line 14 (`start_there`). No subroutines touched so far,
 
-* In line 15, we set ```ecx``` to 1, and then in line 16 we call ```our_printer```. The return address points to the instruction which we will want to run after the subroutine ends — in this case, it is line 17, The processor stores that address (on that stack), and then jumps to the label ```our_printer``` (line 3),
+* In line 15, we set `ecx` to 1, and then in line 16 we call `our_printer`. The return address points to the instruction which we will want to run after the subroutine ends — in this case, it is line 17, The processor stores that address (on that stack), and then jumps to the label `our_printer` (line 3),
 
 * Lines 4, 5, 6 print out “1” on the screen,
 
 * Line 7 jumps to the return address, which is line 17. Now, we finished our first subroutine call.
 
-* Line 17 sets ```ecx``` to 2, and then line 18 calls ```our_double_printer``` (with return address 19). There, in turn, in line 10, we make another call to ```our_printer``` (with return address 11). Thus, we have here a subroutine call **inside** another subroutine! This means that we need to remember **multiple return addressess** at once: “after this subroutine, return to line 11; after _the preceding one_, return to line 19”. Hence, the return addresses naturally form a stack structure — and that’s why they must be stored in such way.
+* Line 17 sets `ecx` to 2, and then line 18 calls `our_double_printer` (with return address 19). There, in turn, in line 10, we make another call to `our_printer` (with return address 11). Thus, we have here a subroutine call **inside** another subroutine! This means that we need to remember **multiple return addressess** at once: “after this subroutine, return to line 11; after _the preceding one_, return to line 19”. Hence, the return addresses naturally form a stack structure — and that’s why they must be stored in such way.
 
-* After printing “2” for the first time, the ```ret``` from line 7 jumps to the return address (11), at the same time pops that value from the stack, to uncover the previously pushed return address associated with calling ```our_double_printer``` (19).  
+* After printing “2” for the first time, the `ret` from line 7 jumps to the return address (11), at the same time pops that value from the stack, to uncover the previously pushed return address associated with calling `our_double_printer` (19).  
 Executing line 11 leads to printing “2” once again, returning to line 12 and popping the return address 12 from the stack.
 
-* Now, line 12 (```ret```) will make the return jump to the address on the top of the stack, which is currently 19.  
+* Now, line 12 (`ret`) will make the return jump to the address on the top of the stack, which is currently 19.  
 
 * Finally, lines 19 and 20 will lead to printing “3” and terminating the program.  
 
@@ -240,13 +240,13 @@ Although such description might sound a bit enigmatic, in practice — due to th
 
 In NASM, the basic way of referring to RAM cells is to put their addresses (of course, the logical one) in **square brackets**. For example:
 
-* mov \[_N_\], ```ecx```: stores the value of register ecx under address _N_;
+* mov \[_N_\], `ecx`: stores the value of register ecx under address _N_;
 
-* ```mov ecx```, \[_N_\]: fetches into register ecx the value from address _N_.  
+* `mov ecx`, \[_N_\]: fetches into register ecx the value from address _N_.  
   
 However, we must watch out for pitfalls of various kinds:  
   
-* Since the size of  ```ecx``` is 4 bytes, the above instructions will actually operate on four memory cells (each of them one-byte), with addresses _n_, _N_+l, _N_+2, _N_+3.  
+* Since the size of  `ecx` is 4 bytes, the above instructions will actually operate on four memory cells (each of them one-byte), with addresses _n_, _N_+l, _N_+2, _N_+3.  
   
 * The exact value of _N_ will be usually not known for us, at least not as a numeric constant (which is e.g, because the placement of segments in the address space is usually not known upfront). Hence, in practice, we will specify it by using available langauge identifiers (see descriptions of arrays and stack below).  
 
@@ -254,20 +254,20 @@ However, we must watch out for pitfalls of various kinds:
 
 An **array** — whether in assembler or some higher-level langauges (e.g, C/C++) — is a _contiguous_ area of memory, storing a sequence of values of the same type (in particular: occupying the same number of bytes). In NASM, a **byte array** can be created with the following instructions:
 
-* ```db``` _val1_, _val2_, ...: creates a read-only array with the specified numeric values _val1_, _val2_ etc. The NASM syntax also allows string constants here, e.g. ```db "ABC", 10``` will create an array of four bytes, with values 65, 66, 67 (ASCII codes of characters ```A, B, C```) and 10 (which happens to be the ASCII code of the line-feed special character),
+* `db` _val1_, _val2_, ...: creates a read-only array with the specified numeric values _val1_, _val2_ etc. The NASM syntax also allows string constants here, e.g. `db "ABC", 10` will create an array of four bytes, with values 65, 66, 67 (ASCII codes of characters `A, B, C`) and 10 (which happens to be the ASCII code of the line-feed special character),
 
-* ```resb``` _N_: creates an array of size _N_, whose content will be then modifiable by our code. (Such arrays are commonly called **uninitialized**, though in practice it often happens that they are initialized with all zeroes).
+* `resb` _N_: creates an array of size _N_, whose content will be then modifiable by our code. (Such arrays are commonly called **uninitialized**, though in practice it often happens that they are initialized with all zeroes).
 
 Whenever the instruction defining an array is preceded by a label, that label — used anywhere else in the code — will denote the address of the first element of that array. Moreover, the NASM syntax allows some amount of explicit arithmetic on memory addresses, so we can write for example:
 
-* ```mov ecx, [tab+4]``` : store into ```ecx``` the value from the address “the first element of the array whose label is tab, plus 4 bytes“.  
-(If we adopt the convention that the cells of that array are numbered starting from zero, this can be expressed in short as: “store into ```ecx``` the value from the address of the fourth cell of the array described by ```tab```”. Here, however, we reach the byte-size pitfall again: as ```ecx``` is four-byte, this will result in actually rewriting the fourth, fifth, sixth and seventh byte of the array!)   
+* `mov ecx, [tab+4]` : store into `ecx` the value from the address “the first element of the array whose label is tab, plus 4 bytes“.  
+(If we adopt the convention that the cells of that array are numbered starting from zero, this can be expressed in short as: “store into `ecx` the value from the address of the fourth cell of the array described by `tab`”. Here, however, we reach the byte-size pitfall again: as `ecx` is four-byte, this will result in actually rewriting the fourth, fifth, sixth and seventh byte of the array!)   
   
-In practice, programmers often need **arrays of multi-byte types**. For example, in Java, the type ```int``` has 4 bytes, so declaring ```int tab [3] = {10, 1000, 100000}```; will result in creating an array of total size of 12 bytes. An analogous code can be also written in the assembler:  
+In practice, programmers often need **arrays of multi-byte types**. For example, in Java, the type `int` has 4 bytes, so declaring `int tab [3] = {10, 1000, 100000}`; will result in creating an array of total size of 12 bytes. An analogous code can be also written in the assembler:  
   
-* ```dd 10, 1000, 100000```: creates a read-only array, containing three 4-byte numbers (of total size 12 B).  
+* `dd 10, 1000, 100000`: creates a read-only array, containing three 4-byte numbers (of total size 12 B).  
   
-The ending “```d```” here comes from “_double word_”, as a **word** traditionally means “2 bytes” in this context. Analogously, ```dw``` (```w``` for _word_) declares an array of 2-byte numbers, and ```dq``` (```q``` for _quad word_) — an array of 8-byte numbers. Similarly, the instructions ```resw 10```, ```resd 10```, ```resq 10``` will allocate a memory area of size — respectively — 20, 40 or 80 bytes.  
+The ending “`d`” here comes from “_double word_”, as a **word** traditionally means “2 bytes” in this context. Analogously, `dw` (`w` for _word_) declares an array of 2-byte numbers, and `dq` (`q` for _quad word_) — an array of 8-byte numbers. Similarly, the instructions `resw 10`, `resd 10`, `resq 10` will allocate a memory area of size — respectively — 20, 40 or 80 bytes.  
 
 However, it must be remembered that — unlike in higher-level languages — the unit of memory addressing (for _all_ kinds of arrays) in the assembler is **always a single byte**, regardless of the “declared content type”. Therefore, even if we have a multi-byte-typed declaration like
 
@@ -276,19 +276,19 @@ tab:
 dd  10,  1000,  100000
 ```
 
-then, still, referring to the value 100000 requires writing ```[tab+8]```, _not_ ```[tab+2]```! Luckily, to make the code more intuitive, the language allows a more explicit notation: ```[tab+4*2]```. Moreover, if we want to refer to the _i_-the element of the array (counting from 0), and the value of _i_ is stored in ```eax```, the language allows this: ```[tab+4*eax]```.  
+then, still, referring to the value 100000 requires writing `[tab+8]`, _not_ `[tab+2]`! Luckily, to make the code more intuitive, the language allows a more explicit notation: `[tab+4*2]`. Moreover, if we want to refer to the _i_-the element of the array (counting from 0), and the value of _i_ is stored in `eax`, the language allows this: `[tab+4*eax]`.  
 
 ### The stack
 
 The basic access to the stack is enabled by instructions which we know back from an earlier lecture:
 
-* ```push rax```: puts the value of ```rax``` on the top of the stack;  
+* `push rax`: puts the value of `rax` on the top of the stack;  
 
-* ```pop rax```: takes (and removes) the value from the top of the stack, and stores it in ```rax```.  
+* `pop rax`: takes (and removes) the value from the top of the stack, and stores it in `rax`.  
 
-In the x86 architecture, the **stack grows downwards** (i.e. towards lower addresses): the stack base has the highest address, and pushing a value boils down to storing it in the memory _directly before_ the current stack content. The **stack pointer register** ```rsp``` always stores the address of the current top element of the stack, and is updated by the processor on every use of the above instructions.  
+In the x86 architecture, the **stack grows downwards** (i.e. towards lower addresses): the stack base has the highest address, and pushing a value boils down to storing it in the memory _directly before_ the current stack content. The **stack pointer register** `rsp` always stores the address of the current top element of the stack, and is updated by the processor on every use of the above instructions.  
 
-The above conventions allow treating the stack as an array, with the starting address stored in ```rsp```. Therefore, to read the value of the top element of the stack, it suffices to write ```[rsp]```. As the stack is often composed of 8-byte entries, ```[rsp+8]``` will often mean the “next top” element, etc.  
+The above conventions allow treating the stack as an array, with the starting address stored in `rsp`. Therefore, to read the value of the top element of the stack, it suffices to write `[rsp]`. As the stack is often composed of 8-byte entries, `[rsp+8]` will often mean the “next top” element, etc.  
 
 For an assembler programmer, the stack is a convenient **temporary storage** for intermediate computation results in casee when we run out of available registers. However, its **fundamental application** is storing all the relevant register and flag values in case of a **subroutine call**.  
   
@@ -309,11 +309,11 @@ void start() {
 }
 ```
 
-In this code, the values of variables ```a``` and ```b``` in function start are respectively 2 and 5. However, during execution of ```our_function```, these are temporarily **obscured** by respective 3 and 4 — until we exit the call to ```our_function```. After returning to start, the previous values of ```a``` and ```b``` will be restored — thanks to the fact that the compiler was able to associate the names ```a```, ```b``` with distinct memory addresses, depending on which function is currently executed.  
+In this code, the values of variables `a` and `b` in function start are respectively 2 and 5. However, during execution of `our_function`, these are temporarily **obscured** by respective 3 and 4 — until we exit the call to `our_function`. After returning to start, the previous values of `a` and `b` will be restored — thanks to the fact that the compiler was able to associate the names `a`, `b` with distinct memory addresses, depending on which function is currently executed.  
   
-A similar problem occurs in the assembler: here, also, a subroutine that has been just called can e.g, freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assembler, names like ```ebx``` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
+A similar problem occurs in the assembler: here, also, a subroutine that has been just called can e.g, freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assembler, names like `ebx` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
 
-Moreover, while the abovementioned stack management of return addresses happens “automatically”, as a side effect of the ```call``` and ```ret``` instructions, it is generally a **programmer’s responsibility** to back up the general-purpose registers! As a result, the assembler code often contains — depending on the convention followed — whole “back-up sections” appearing either _just before_ or _just after_ making a subroutine call:
+Moreover, while the abovementioned stack management of return addresses happens “automatically”, as a side effect of the `call` and `ret` instructions, it is generally a **programmer’s responsibility** to back up the general-purpose registers! As a result, the assembler code often contains — depending on the convention followed — whole “back-up sections” appearing either _just before_ or _just after_ making a subroutine call:
 
 <table align="center">
 <tr>
@@ -364,10 +364,10 @@ The key things here are to ensure that:
 
 * backing up (along at least one of the above strategies) altogether covers _every_ register whose obscuring by a called subroutine could affect the correctness of the whole program;  
 
-* in case when back-up involves multiple values (like ```eax```, ```ecx```, ```edx``` in the above example) — the order of restoring them from the stack should be reverse to the order of pushing them there (following the LIFO rule);
+* in case when back-up involves multiple values (like `eax`, `ecx`, `edx` in the above example) — the order of restoring them from the stack should be reverse to the order of pushing them there (following the LIFO rule);
 
-* the stack content at the end of a subroutine (just before ```ret```) should be **identical** with its content at the start of that subroutine (just after ```call```) — which is necessary for properly retrieving the return address from the top of the stack.  
-(For that reason, it would be unacceptable e.g. to push ```eax``` to the stack on the calling side but pop it back in the called subroutine code).  
+* the stack content at the end of a subroutine (just before `ret`) should be **identical** with its content at the start of that subroutine (just after `call`) — which is necessary for properly retrieving the return address from the top of the stack.  
+(For that reason, it would be unacceptable e.g. to push `eax` to the stack on the calling side but pop it back in the called subroutine code).  
 
 ## Other instructions  
 
@@ -381,43 +381,39 @@ Similarly, the responsibility of operating system also includes managing memory 
 
 Last, we will discuss instructions which operate on variables, treating them as sequences of single bits.  
 
-In the lecture “Logic”, we met logic operations (like ```AND```, ```OR```, ```XOR```), though their arguments were single bits, e.g. “```1 AND 0```”, “```0 OR 1```” etc. Such operations can be extended to multi-bit numbers, and perform them **bitwise**, i.e. separately on each position. For example:  
+In the lecture “Logic”, we met logic operations (like `AND`, `OR`, `XOR`), though their arguments were single bits, e.g. “`1 AND 0`”, “`0 OR 1`” etc. Such operations can be extended to multi-bit numbers, and perform them **bitwise**, i.e. separately on each position. For example:  
 
-```
-10011010 AND 11010001 = 10010000,      10011010 OR 11010001 = 11011011.
-```
+`10011010 AND 11010001 = 10010000, 10011010 OR 11010001 = 11011011.`
 
 In the assembler, the standard Boolean operator names typically represent bitwise operations, for example:
 
-```and ax, 1111111111011111```
+`and ax, 1111111111011111`
 
-will result in clearing (i.e. setting to zero) the sixth rightmost bit in register ```eax``` (and leaving all the other bits unchanged). The same action can be written even more concisely:
+will result in clearing (i.e. setting to zero) the sixth rightmost bit in register `eax` (and leaving all the other bits unchanged). The same action can be written even more concisely:
 
-```and ax, ```<sup>~</sup>```32```
+`and ax, `<sup>~</sup>`32`
 
-where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation ```0...00100000```, its bitwise negation gives exactly ```1...11011111```).   
+where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation `0...00100000`, its bitwise negation gives exactly `1...11011111`).   
 
-The above code may have a practical application. In the ASCII encoding (described on the lecture “Encoding data”), the uppercase characters differ from their lowercase counterparts only by the sixth rightmost bit value (e.g. ```A``` \= 65, ```a``` \= 97). Therefore, the above code just converts characters to their uppercase versions.  
+The above code may have a practical application. In the ASCII encoding (described on the lecture “Encoding data”), the uppercase characters differ from their lowercase counterparts only by the sixth rightmost bit value (e.g. `A` \= 65, `a` \= 97). Therefore, the above code just converts characters to their uppercase versions.  
 
 A standard application of bitwise operations is zeroing a register by the use of xor, for example:  
 
-```
-xor eax, eax
-```
+`xor eax, eax`
 
-clears the value of ```eax```. That way of coding it is obviously less human-readable than ```mov eax, 0```; however, it turns out to be more efficient (or, simply put, faster). This is the main reason for using bitwise operations in the assembler code.  
+clears the value of `eax`. That way of coding it is obviously less human-readable than `mov eax, 0`; however, it turns out to be more efficient (or, simply put, faster). This is the main reason for using bitwise operations in the assembler code.  
 
 Another type of operations worth mentioning here are the **bit shifts**, which append a given number of zeros to the binary representation of a number, either from the left or from the right. For example:  
 
-```shl eax, 3```  
+`shl eax, 3`  
 
-results in “shifting the value of ```eax``` by 3 bits to the left”, that is, appending three zeros on the right: for example, 101<sub>(2)</sub> = 5 will turn into 101000<sub>(2)</sub> = 40, And conversely, shifting 40 by 3 bits to the right will produce 5. Hence, at least as long as we don’t face any arithmetic overflows, these operations are equivalent to multiplication or (integer) division by 2<sup>3</sup>. In practice, though, **several variants** of bit shifts have been defined which differ exactly in the treatment of arithmetic overflows.  
+results in “shifting the value of `eax` by 3 bits to the left”, that is, appending three zeros on the right: for example, 101<sub>(2)</sub> = 5 will turn into 101000<sub>(2)</sub> = 40, And conversely, shifting 40 by 3 bits to the right will produce 5. Hence, at least as long as we don’t face any arithmetic overflows, these operations are equivalent to multiplication or (integer) division by 2<sup>3</sup>. In practice, though, **several variants** of bit shifts have been defined which differ exactly in the treatment of arithmetic overflows.  
 
-The operations described above also have counterparts in higher-level languages (typically denoted by ```&```, ```|```, ```~```, ```<<``` and ```>>```). While in older times they were often used for optimizing programs, currently their importance in this regard has decreased — as optimizations of this kind have become a task for compilers, or even for the processor itself. Yet, bitwise operations and bit shifts still appear in high-level language code, for several reasons:  
+The operations described above also have counterparts in higher-level languages (typically denoted by `&`, `|`, `~`, `<<` and `>>`). While in older times they were often used for optimizing programs, currently their importance in this regard has decreased — as optimizations of this kind have become a task for compilers, or even for the processor itself. Yet, bitwise operations and bit shifts still appear in high-level language code, for several reasons:  
 
 * historical grounds: some programmers are used to exploiting them;  
 
-* code clarity: ```1 << 17``` may look more legibly than ```131072```, or ```(int) Math.pow(2, 17)```;  
+* code clarity: `1 << 17` may look more legibly than `131072`, or `(int) Math.pow(2, 17)`;  
 
 * in case of C/C++ case of handling bit masks: e.g. many functions from the operating system library accept numeric arguments in which each bit carries its own meaning; in such case, bitwise operations significantly simplify managing such information.
 
@@ -514,7 +510,7 @@ In the case of CPU cache, **speed** is a decision factor of utmost importance: c
 
 * The cache is an array of 2<sup>N</sup> **entries**, each of which contains some value from the RAM together with its source address.  
 
-* Whenever the CPU needs a value from an address _A_, it checks the cache only at the **index** _N_ % 2<sup>N</sup> (where ```%``` is the _modulo_ operation, i.e. the division remainder).
+* Whenever the CPU needs a value from an address _A_, it checks the cache only at the **index** _N_ % 2<sup>N</sup> (where `%` is the _modulo_ operation, i.e. the division remainder).
 
 * If we do fetch the value from an address _A_ in RAM, we store it always at the index  _A_ % 2<sup>N</sup>. The previous cache entry at that index is overwritten.  
 
@@ -571,7 +567,7 @@ At this point, however, we need to make three disclaimers:
 * Translating a virtaul address to a logical one used to happen in the way described above in the 32-bit processors from the x86 family. In the newer 64-bit version known as **x86-64**, in the 64-bit modes, segmentation becomes reduced (though still present to some extent).  
 
 * In the assembler code, the segment selector is often implicit as the compiler can deduce it from the context. (For example: the target addresses for jump instructions are interpreted within code segment; the data pointers within data segment, etc.)  
-If the programmer needs to specify the segment selector explicitly, they can use an appropriate extended syntax, e.g. ```cs:eax``` means “an address with offset specified by the value of ```eax```, and the code segment register value (``cs``) used as the segment selector".  
+If the programmer needs to specify the segment selector explicitly, they can use an appropriate extended syntax, e.g. `cs:eax` means “an address with offset specified by the value of `eax`, and the code segment register value (``cs``) used as the segment selector".  
 
 * Again, the terminology commonly used to describe segmentation contains many divergences. For example:
 

@@ -70,7 +70,7 @@ a = a - b;
 a = a * a;
 ```
 
-in which the variables a, b, c correspond, respectively, to registers eax, ebx, ecx, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be (1-2\*3) \*( 1-2\*3), which is 25).
+in which the variables a, b, c correspond, respectively, to registers ```eax```, ```ebx```, ```ecx```, (For clarity: as a result of running that code, the final value of variable a, or register eax, will be ```(1-2*3)*( 1-2*3)```, which is 25).
 
 Notably, while in languages like Java/C++ the programmer can use nearly arbitrary variable names (of course assuming they have been properly declared), in assembler the available registers are restricted to a fixed set (which we already described in the lecture “Processor and programs”). If these registers do not suffice to hold all necessary data (which happens very often), the data must be somehow stored in the RAM memory, outside registers — of which some examples will be shown later.
 

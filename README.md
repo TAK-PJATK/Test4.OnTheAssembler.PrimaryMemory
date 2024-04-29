@@ -156,7 +156,7 @@ Similarly as for loops and conditional branches, there is no assembler syntax fo
 * ```call``` _X_: make a **subroutine call** to the label _X_, which means:
   
 &nbsp;&nbsp;&nbsp;&nbsp;—    jump (unconditionally) to _X_  
-&nbsp;&nbsp;&nbsp;&nbsp;—    also, store in a special place (specifically — on the _stack_ which will be described later in this lecture) the **return address**, i.e. the address to which the execution should jump back, after executing the subroutine is finished. (It is the address of the instruction_ directly following_ the call instruction).  
+&nbsp;&nbsp;&nbsp;&nbsp;—    also, store in a special place (specifically — on the _stack_ which will be described later in this lecture) the **return address**, i.e. the address to which the execution should jump back, after executing the subroutine is finished. (It is the address of the instruction _directly following_ the call instruction).  
   
 * ```ret```: make the return jump, that is: jump (unconditionally) to the most recently stored return address. (Also, clean up the just-used information about the return address).
 

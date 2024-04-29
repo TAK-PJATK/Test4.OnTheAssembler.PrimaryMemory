@@ -315,7 +315,7 @@ A similar problem occurs in the assembler: here, also, a subroutine that has bee
 
 Moreover, while the abovementioned stack management of return addresses happens “automatically”, as a side effect of the ```call``` and ```ret``` instructions, it is generally a **programmer’s responsibility** to back up the general-purpose registers! As a result, the assembler code often contains — depending on the convention followed — whole “back-up sections” appearing either _just before_ or _just after_ making a subroutine call:
 
-<table>
+<table align="center">
 <tr>
 <th>
 back-up just before the call  
@@ -360,31 +360,6 @@ ret
 </tr>
 </table>
 
-back-up just before the call  
-
-```
-push eax
-push ecx
-push edx
-call my_function
-pop edx
-pop ecx
-pop eax
-```
-
-back-up just after the call  
-
-```
-my_function:
-push eax
-push ecx
-push edx
-// proper subroutine code
-pop edx
-pop ecx
-pop eax
-ret
-```
 
 ![back-up just before the call vs. back-up just after the call](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/backupcode.PNG?raw=true)
 

@@ -329,7 +329,6 @@ back-up just after the call
 
 <td>
 <pre>
-```
 push eax
 push ecx
 push edx
@@ -337,11 +336,11 @@ call my_function
 pop edx
 pop ecx
 pop eax
-```
 </pre>
 </td>
 
 <td>
+<pre>
 my_function:
 push eax
 push ecx
@@ -351,6 +350,7 @@ pop edx
 pop ecx
 pop eax
 ret
+</pre>
 </td>
 
 </tr>

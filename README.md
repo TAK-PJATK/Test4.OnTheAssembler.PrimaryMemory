@@ -342,8 +342,6 @@ pop eax
 </td>
 
 <td>
-<pre>
-```
 my_function:
 push eax
 push ecx
@@ -353,8 +351,6 @@ pop edx
 pop ecx
 pop eax
 ret
-```
-</pre>
 </td>
 
 </tr>

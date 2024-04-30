@@ -1,3 +1,26 @@
+```
+1    jmp start_there  
+2    
+3  our_printer:  
+4    // some code (details omitted)
+5    // printing out the value of ecx
+6    // to the screen
+7    ret  
+8
+9  our_double_printer:
+10    call our_printer  
+11    call our_printer  
+12    ret
+13
+14  start_there:
+15    mov  ecx, 1
+16    call our_printer
+17    mov  ecx, 2
+18    call our_double_printer
+19    mov  ecx, 3
+20    call our_printer
+```
+
 The code you provided is written in assembly language, which is a low-level programming language that provides a direct interface to the computer's hardware. Here's a clear, concise, and readable explanation of the code:
 
 1. `jmp start_there`: This instruction jumps to the `start_there` label, which is the main entry point of the program.

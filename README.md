@@ -188,6 +188,8 @@ Let us consider an example. Suppose that we have some code resulting in printing
 20    call our_printer
 ```
 
+[explained](assembly_code_explained.md)
+
 Executing this code will proceed as follows:
 
 * We run line 1, which causes a jump to line 14 (`start_there`). No subroutines touched so far,

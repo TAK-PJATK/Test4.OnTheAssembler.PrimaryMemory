@@ -49,6 +49,20 @@ The code you provided is written in assembly language, which is a low-level prog
 
 19. `mov ecx, 3`: This instruction moves the value 3 into the `ecx` register.
 
+
+MS Copilot:  
+
+1. The program starts by jumping to the `start_there` label.
+2. There are two functions defined: `our_printer` and `our_double_printer`.
+    - `our_printer` appears to print the value of the `ecx` register to the screen.
+    - `our_double_printer` calls `our_printer` twice.
+3. In the `start_there` section:
+    - The value of `ecx` is set to 1 and `our_printer` is called.
+    - The value of `ecx` is then set to 2, and `our_double_printer` is called (which in turn calls `our_printer` twice).
+    - Finally, the value of `ecx` is set to 3, and `our_printer` is called again.
+
+Without the omitted details, it's challenging to provide a precise understanding of the program's purpose. However, based on what we have, it seems to involve printing values to the screen using the `ecx` register. If you have any specific questions or need further clarification, feel free to ask! 😊
+
 20. `call our_printer`: This instruction calls the `our_printer` subroutine, which prints the value of the `ecx` register (3) to the screen.
 
 In summary, this code demonstrates the use of subroutines (functions) in assembly language to perform a simple task of printing the value of a register to the screen. The `start_there` label is the main entry point of the program, and it calls the `our_printer` and `our_double_printer` subroutines to print the values of the `ecx` register.

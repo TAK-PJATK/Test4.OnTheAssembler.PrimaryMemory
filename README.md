@@ -14,7 +14,7 @@
 
 Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye. (On the other hand, this language is still way less intuitive than e.g. C++ or Java). 
 
-The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assembler code and understand what they do. Such passive knowledge is even more important given that snippets of assembler code can be found in the “most low-level” among the popular programming languages (e.g, C), Therefore, even those who are not strictly assembler programmers may have a need to understand such code.
+The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assembler code and understand what they do. Such passive knowledge is even more important given that snippets of assembler code can be found in the “most low-level” among the popular programming languages (e.g, C). Therefore, even those who aren't strictly assembler programmers may need to understand such code.
 
 ## Introductory remarks
 

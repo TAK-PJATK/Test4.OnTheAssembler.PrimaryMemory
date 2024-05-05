@@ -626,3 +626,5 @@ The above paragraph contains multiple simplifications but it (hopefully) shows t
 Note that the main idea of caching — moving data between a larger slower memory (_M_) and a smaller faster one (_C_) — does take place also in case of virtualization: this time, RAM plays the role of _C_, and _M_ is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special case of caching.  
 
 The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those processess) at the cost of efficiency.  
+
+

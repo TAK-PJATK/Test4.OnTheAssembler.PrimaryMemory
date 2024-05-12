@@ -292,7 +292,7 @@ In the x86 architecture, the **stack grows downwards** (i.e. towards lower addre
 
 The above conventions allow treating the stack as an array, with the starting address stored in `rsp`. Therefore, to read the value of the top element of the stack, it suffices to write `[rsp]`. As the stack is often composed of 8-byte entries, `[rsp+8]` will often mean the “next top” element, etc.  
 
-For an assembler programmer, the stack is a convenient **temporary storage** for intermediate computation results in casee when we run out of available registers. However, its **fundamental application** is storing all the relevant register and flag values in case of a **subroutine call**.  
+For an assembler programmer, the stack is a convenient **temporary storage** for intermediate computation results in cases when we run out of available registers. However, its **fundamental application** is storing all the relevant register and flag values in case of a **subroutine call**.  
   
 In an earlier part of this lecture, we described how the stack is used to store the “obscured” return addresses — however, an analogous problem (and a solution to it offered by the stack) involves the general-purpose registers. For example, consider the following Java code:  
 
@@ -466,7 +466,7 @@ Other important properties of the SDRAM type memory are:
 
 * _interleaving_ - allows more than one read/write operation at a time;
 
-* returning data in the form of multi-byte chunks (which is desirable because, as soon as a particular memory cell is fetched, its neighbors are also likely to be soon needed).
+* returning data in the form of multi-byte chunks (which is desirable because, as soon as a particular memory cell is fetched, its neighbors are also likely to be needed soon).
 
 During its evolution, DDR SDRAM has existed in the following configurations:  
 

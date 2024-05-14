@@ -480,7 +480,7 @@ Unlike cache, DDR SDRAM is a separate integrated circuit, which makes it possibl
 
 The size of available RAM memory varies greatly across computers: in typical modern personal devices, it can range from a few up to hundreds of gigabytes.  
 
-An important eharaeteristie of the processor and the motherboard is the number of **channels**. A _single-channel_ architecture means that RAM has only one connection (_channel_) with the processor. _Dual-channel_ means there are 2 such connections; the number of channels can be also 3, 4, or 8. Having more channels allows the processor to communicate simultaneously with more memory modules. Therefore, using e.g, two 4 GB modules will be more efficient than one 8 GB module. Benefitting from multi-channel transmission may, however, require ensuring that the modules used have the same manufacturer and/or capacity.  
+An important characteristic of the processor and the motherboard is the number of **channels**. A _single-channel_ architecture means that RAM has only one connection (_channel_) with the processor. _Dual-channel_ means there are 2 such connections; the number of channels can be also 3, 4, or 8. Having more channels allows the processor to communicate simultaneously with more memory modules. Therefore, using e.g, two 4 GB modules will be more efficient than one 8 GB module. Benefitting from multi-channel transmission may, however, require ensuring that the modules used have the same manufacturer and/or capacity.  
 
 ## Cache
 

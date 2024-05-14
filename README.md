@@ -566,7 +566,7 @@ To obtain the **logical address** corresponding to a given virtual address, we n
 
 At this point, however, we need to make three disclaimers:  
 
-* Translating a virtaul address to a logical one used to happen in the way described above in the 32-bit processors from the x86 family. In the newer 64-bit version known as **x86-64**, in the 64-bit modes, segmentation becomes reduced (though still present to some extent).  
+* Translating a virtual address to a logical one used to happen in the way described above in the 32-bit processors from the x86 family. In the newer 64-bit version known as **x86-64**, in the 64-bit modes, segmentation becomes reduced (though still present to some extent).  
 
 * In the assembler code, the segment selector is often implicit as the compiler can deduce it from the context. (For example: the target addresses for jump instructions are interpreted within code segment; the data pointers within data segment, etc.)  
 If the programmer needs to specify the segment selector explicitly, they can use an appropriate extended syntax, e.g. `cs:eax` means “an address with offset specified by the value of `eax`, and the code segment register value (``cs``) used as the segment selector".  

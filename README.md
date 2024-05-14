@@ -505,10 +505,14 @@ Caches can generally work in various ways, depending on how we answer the follow
 * How much time do we lose in case of a cache **miss**?  
 (That is related to the difference between access times for _M_ and for _C_)
 
-* In case when we do fetch a value from _M_, should we store in the cache just that value, or also some other values related to it?  
+* In case of fetching a value from _M_, should we store in the cache just that value, or also some other values related to it?  
 (An example from the database world: after retrieving a customer’s last name, we may reasonably expect a need to fetch their first name — so, whenever we fetch the former, it may pay off to proactively also fetch the latter).  
 
-In the case of CPU cache, **speed** is a decision factor of utmost importance: checking for a value in the cache should take as little clock cycles as possible (and, to achieve that, we can even accept an increased risk of a cache miss). This leads to the following _simplified_ rules of operation (which we will below amend to a somewhat more precise form):
+In the case of CPU cache, **speed** is the most important decision factor: checking for a value in the cache should take as little clock cycles as possible (and, to achieve that, we can even accept an increased risk of a cache miss). This leads to the following _simplified_ rules of operation (which we will below amend to a somewhat more precise form):
+
+When talking about the CPU cache, **speed** is the key thing to think about. It's all about how quickly the CPU can check if certain information is in the cache, using as few steps as possible. Even if this quick check means it might miss finding the information sometimes, it's still worth it.
+
+This leads us to establish some _simplified_ rules for how things work (which we’ll make more detailed and clear shortly):” 
 
 * The cache is an array of 2<sup>N</sup> **entries**, each of which contains some value from the RAM together with its source address.  
 
@@ -583,8 +587,9 @@ Let us recall that the logical address should not be confused with the **physica
 
 ![The overall idea of paging.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Paging.PNG?raw=true)
 
-  **Figure 2.** The overall idea of paging.  
-  Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
+**Figure 2.** The overall idea of paging.  
+
+Although the general principle seems very similar to the picture for segmentation (see Figure 1). the main difference is in the equal sizes of all RAM frames, which allows unconstrained bookkeeping. (Another important difference, which we will discuss later in this lecture, is the virtualization technique).
 
 What can be seen here is a split of the process address space into **pages** of a fixed size (typically 4kiB), and the split of RAM into **frames** of the same size.  
   

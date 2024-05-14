@@ -423,7 +423,7 @@ More strictly, it may happen that the number N will not be interpreted directly 
 
 # Primary memory  
   
-Computer memory is not uniform. On this lecture, we will discuss these types of memory which are fundamental from the viewpoint of the modem architecture (x86); they are used while executing _every_ program. Besides the processor registers (already well known to us), these include: cache and RAM, Altogether, they’re called **primary storage** (or _primary memory_), though both these terms are also used to describe the RAM layer alone.  
+Computer memory is not uniform. In this lecture, we will discuss these types of memory which are fundamental from the viewpoint of the modem architecture (x86); they are used while executing _every_ program. Besides the processor registers (already well known to us), these include: cache and RAM. Altogether, they’re called **primary storage** (or _primary memory_), though both terms are also used to describe the RAM layer alone.  
   
 Of course, there also exist other memory types, e.g. SSD and HDD drives, pendrives, DVD discs etc. These form the so-called **secondary** (or _external_) **memory**, which will be discussed in a later lecture. Unlike the primary memory, it is not available to the processor directly, but via the input/output interfaces. It’s also not strictly _necessary_ for executing _every_ program, though it’s an important component of every personal computer, as all kinds of **non-volatile memory** (keeping its content even after losing electric power) belong to the secondary memory.  
 
@@ -436,17 +436,17 @@ With respect to these two properties, the types of primary memory look as follow
 * **Main memory** (typically called simply **RAM**, or _primary memory_) — largest and slowest. It defines the area of memory available directly to the processor (as we already described in the lectures “Computer structure” and “Processor and programs”). In this lecture, we will discuss in more detail the process of translating between logical and physical addresses, and in particular, the important technique of _memory virtualization_.  
 
 * **Cache** — intermediate capacity and speed.
-    Cache is physically placed inside the processor and acts as a buffer for exchanging data between the RAM and the registers. In this lecture, we will describe its purpose, structure and rules of operation.  
+Cache is physically placed inside the processor and acts as a buffer for exchanging data between the RAM and the registers. In this lecture, we will describe its purpose, structure and rules of operation.  
 
 * **Processor registers** — fastest and smallest; already discussed in detail in the lecture “Processor and programs”.  
 
-Unfortunately, in practice, we face an unavoidable ambiguity of naming, with _primary memory_, _main memory_ and _internal memory_ used interchangeably to denote either the whole primary memory or just its largest and slowest layer. Also, the term _RAM_, while literally expanding to “random access memory (of any kind)”, is commonly used to describe the main memory — and so will happen in the remaining part of this lecture.  
+Unfortunately, in practice, we face an unavoidable ambiguity of naming, with _primary memory_, _main memory_ and _internal memory_ used interchangeably to denote either the whole primary memory or just its largest and slowest layer. Also, the term _RAM_, while literally expanding to "random access memory (of any kind)", is commonly used to describe the main memory - and will continue to be used as such in the rest of this lecture.
 
 ## Hardware properties
 
 ### Static RAM (SRAM)
 
-The most effective memory type is **static memory (SRAM)**, called so because it does not need periodic refreshing of its content (unlike the dynamic RAM, DRAM),
+The most effective memory type is **static memory (SRAM)**, called so because it does not need periodic refreshing of its content (unlike the dynamic RAM: DRAM),
 
 On the other hand, SRAM is more expensive than DRAM, as a result of using more transistors per a single memory cell. This also makes SRAM less _dense_ (i.e. taking physically more space). For these reasons, SRAM is used in processor registers and relatively small cache memories, but not in much larger RAM modules in personal computers.
 

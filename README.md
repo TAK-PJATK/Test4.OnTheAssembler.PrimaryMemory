@@ -1,10 +1,10 @@
 # Test 4. On the assembler & Primary memory  
 
-[On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler) 
+[On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler)
 [:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/on_the_assembler.pdf)  
 
 [Primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#primary-memory) [:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/primary_memory.pdf)  
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;[Types of primary memory](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#types-of-primary-memory)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Hardware properties](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#hardware-properties)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Cache](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#cache)  
@@ -12,9 +12,9 @@
 
 # On the assembler
 
-Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye. (On the other hand, this language is still way less intuitive than e.g. C++ or Java). 
+Our today’s topic will be the basics of **assembler**, i.e. a very low-level programming language in which single instructions represent single instructions of machine code in a form more readable for the human eye. (On the other hand, this language is still way less intuitive than e.g. C++ or Java).
 
-The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assembler code and understand what they do. Such passive knowledge is even more important given that snippets of assembler code can be found in the “most low-level” among the popular programming languages (e.g, C). Therefore, even those who aren't strictly assembler programmers may need to understand such code.
+The goal of this lecture is _not_ to teach programming in the assembler, as this topic is way too broad for here. We will, however, look at a few snippets of assembler code and understand what they do. Such passive knowledge is even more important given that snippets of assembler code can be found in the “most low-level” among the popular programming languages (e.g. C). Therefore, even those who aren't strictly assembler programmers may need to understand such code.
 
 ## Introductory remarks
 
@@ -28,7 +28,7 @@ The first model from this family, Intel 8086 from year 1978, was used in the fir
 
 ### Distinctive language properties  
 
-The structure of an assembler program has a lot in common with programs known from more popular languages: basically, a program is a sequence of **instructions**, often taking **arguments** which can be e.g, constants, registers (the simplest counterpart of variables), or more complex memory references (somewhat analogous to arrays, pointers etc.).  
+The structure of an assembler program has a lot in common with programs known from more popular languages: basically, a program is a sequence of **instructions**, often taking **arguments** which can be e.g. constants, registers (the simplest counterpart of variables), or more complex memory references (somewhat analogous to arrays, pointers etc.).  
 
 On the other hand, the assembler syntax does not contain some constructs which are fundamental for higher-level languages (while, in assembler, the necessary functionality must be “built piece by piece” from instructions with more simplistic meaning). Two examples of such “painful omissions” are:  
 
@@ -53,7 +53,7 @@ On the other hand, the assembler syntax does not contain some constructs which a
 
 The above code contains registers `eax`, `ebx`, `ecx`, and the following instructions:
 
-* `mov` _X Y_: stores into register _X_ the value described by _Y_ (e.g, a numeric constant, or the value of another register);
+* `mov` _X Y_: stores into register _X_ the value described by _Y_ (e.g. a numeric constant, or the value of another register);
 
 * `sub` _X Y_: subtracts tom the value of _X_ the value described by _Y_, and stores the result back into _X_;
 
@@ -116,7 +116,7 @@ do {
 } while (i != 0);
 ```
 
-in which the variable sum corresponds to the register eax, and i corresponds to ecx.
+in which the variable sum corresponds to the register `eax`, and i corresponds to `ecx`.
 
 ### A conditional instruction
 
@@ -154,7 +154,7 @@ A **subroutine** (also called: subprogram, procedure, function) is a piece of pr
 
 Thus, a _non-example_ of a subroutine is the content of a `while` loop (even though it can be executed many times). _Examples_ of subroutines are functions in higher-level programming languages (which, in Java and other object oriented-languages, are often called _methods_).  
 
-Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functionality can be essentially built of simpler elements: unconditional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (`eip`). However, since the x86 architecture does not offer a direct programmer access to register `eip`, instead one has to use special instructions which hide the details from the programmer:
+Similarly as for loops and conditional branches, there is no assembler syntax for defining subroutines straightforwardly; instead, the necessary functi'onality can be essentially built of simpler elements: unconditional **jumps** to an instruction specified by its address, and existence of an instruction pointer register (`eip`). However, since the x86 architecture does not offer a direct programmer access to register `eip`, instead one has to use special instructions which hide the details from the programmer:
 
 * `call` _X_: make a **subroutine call** to the label _X_, which means:
   
@@ -213,7 +213,7 @@ The strength of the mechanism described above lies in its **full generality**: t
 
 ## Using RAM memory  
 
-Until now, all our examples only involved manipulating on data stored in registers. These, however, are limited in number and in total capacity. On the good side, the operating system equips every process with some amount of RAM memory (up to 4GiB). This area can be imagined as what we'd call an array in higher-level langauges: a sequence of memory cells to which we can refer using consecutive indices (here called **addresses**).  
+Until now, all our examples only involved manipulating on data stored in registers. These, however, are limited in number and in total capacity. On the good side, the operating system equips every process with some amount of RAM memory (up to 4GiB). This area can be imagined as what we'd call an array in higher-level languages: a sequence of memory cells to which we can refer using consecutive indices (here called **addresses**).  
 
 ### The address space of a process
 
@@ -222,7 +222,7 @@ While the _physical_ localization of the area of RAM granted to a particular pro
 In such address space, we distinguish several areas with a specified purpose, size and access mode. (These areas are often called **segments**, although that term happens to have different interpretations in various contexts).
 
 ![The typical layout of the address space of a process in the x86 architecture.](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/images/Figure1AddressSpace.PNG?raw=true)
-     
+
   **Figure 1.** The typical layout of the address space of a process in the x86 architecture.
   As it dates back to the times of 32-bit addressing, the space of available addresses has size 2<sup>32</sup> B = 4 GiB.
   The code and data segments (whose size is known upfront at the start of program execution) are located in the lowest address ranges: the stack and heap segments (which grow dynamically as the process executes) are placed on the opposite sides of the remaining free place — which leaves maximum elasticity in memory management. By convention, the heap takes the lower addresses and grows upwards, while the stack takes the highest addresses and grows downwards.
@@ -236,7 +236,7 @@ In such address space, we distinguish several areas with a specified purpose, si
   —    The **stack** stores data which can be organized in the so-called **LIFO** manner (_last in, first out_), that is: whenever a new value is _pushed_ to the _top_ of the stack, it will be _popped_ (i.e. removed) from there earlier than any other values already currently present on the stack.  
 Although such description might sound a bit enigmatic, in practice — due to the natural process of organizing the code into subroutines — the stack structure is fit for storing all kinds of **subroutine local data**, that is: data whose lifetime ends at the moment of exiting a subroutine.  
 
-  —    The **heap** stores those dynamically allocated data whose lifetime can extend beyond the context in which they have been created. For example, in languages like Java and C++, the heap will host data (e.g, objects, arrays) created with the new keyword: even if a usage of new happens inside some function, the created object must be often stored also after returning from that function (e.g. because the function has returned a pointer or a reference to it). In such case, the moment of removing the object from the memory can be determined directly by the programmer (in C++) or by the language runtime environment (in Java); anyway, in both cases, there is no LIFO-like rule here, which makes the stack not suitable for such data.  
+  —    The **heap** stores those dynamically allocated data whose lifetime can extend beyond the context in which they have been created. For example, in languages like Java and C++, the heap will host data (e.g. objects, arrays) created with the new keyword: even if a usage of new happens inside some function, the created object must be often stored also after returning from that function (e.g. because the function has returned a pointer or a reference to it). In such case, the moment of removing the object from the memory can be determined directly by the programmer (in C++) or by the language runtime environment (in Java); anyway, in both cases, there is no LIFO-like rule here, which makes the stack not suitable for such data.  
 
 ### Memory references
 
@@ -250,11 +250,11 @@ However, we must watch out for pitfalls of various kinds:
   
 * Since the size of  `ecx` is 4 bytes, the above instructions will actually operate on four memory cells (each of them one-byte), with addresses _n_, _N_+l, _N_+2, _N_+3.  
   
-* The exact value of _N_ will be usually not known for us, at least not as a numeric constant (which is e.g, because the placement of segments in the address space is usually not known upfront). Hence, in practice, we will specify it by using available langauge identifiers (see descriptions of arrays and stack below).  
+* The exact value of _N_ will be usually not known for us, at least not as a numeric constant (which is e.g. because the placement of segments in the address space is usually not known upfront). Hence, in practice, we will specify it by using available language identifiers (see descriptions of arrays and stack below).  
 
 ### Arrays  
 
-An **array** — whether in assembler or some higher-level langauges (e.g, C/C++) — is a _contiguous_ area of memory, storing a sequence of values of the same type (in particular: occupying the same number of bytes). In NASM, a **byte array** can be created with the following instructions:
+An **array** — whether in assembler or some higher-level languages (e.g. C/C++) — is a _contiguous_ area of memory, storing a sequence of values of the same type (in particular: occupying the same number of bytes). In NASM, a **byte array** can be created with the following instructions:
 
 * `db` _val1_, _val2_, ...: creates a read-only array with the specified numeric values _val1_, _val2_ etc. The NASM syntax also allows string constants here, e.g. `db "ABC", 10` will create an array of four bytes, with values 65, 66, 67 (ASCII codes of characters `A, B, C`) and 10 (which happens to be the ASCII code of the line-feed special character),
 
@@ -263,7 +263,7 @@ An **array** — whether in assembler or some higher-level langauges (e.g, C/C++
 Whenever the instruction defining an array is preceded by a label, that label — used anywhere else in the code — will denote the address of the first element of that array. Moreover, the NASM syntax allows some amount of explicit arithmetic on memory addresses, so we can write for example:
 
 * `mov ecx, [tab+4]` : store into `ecx` the value from the address “the first element of the array whose label is tab, plus 4 bytes“.  
-(If we adopt the convention that the cells of that array are numbered starting from zero, this can be expressed in short as: “store into `ecx` the value from the address of the fourth cell of the array described by `tab`”. Here, however, we reach the byte-size pitfall again: as `ecx` is four-byte, this will result in actually rewriting the fourth, fifth, sixth and seventh byte of the array!)   
+(If we adopt the convention that the cells of that array are numbered starting from zero, this can be expressed in short as: “store into `ecx` the value from the address of the fourth cell of the array described by `tab`”. Here, however, we reach the byte-size pitfall again: as `ecx` is four-byte, this will result in actually rewriting the fourth, fifth, sixth and seventh byte of the array!)
   
 In practice, programmers often need **arrays of multi-byte types**. For example, in Java, the type `int` has 4 bytes, so declaring `int tab [3] = {10, 1000, 100000}`; will result in creating an array of total size of 12 bytes. An analogous code can be also written in the assembler:  
   
@@ -313,7 +313,7 @@ void start() {
 
 In this code, the values of variables `a` and `b` in function start are respectively 2 and 5. However, during execution of `our_function`, these are temporarily **obscured** by respective 3 and 4 — until we exit the call to `our_function`. After returning to start, the previous values of `a` and `b` will be restored — thanks to the fact that the compiler was able to associate the names `a`, `b` with distinct memory addresses, depending on which function is currently executed.  
   
-A similar problem occurs in the assembler: here, also, a subroutine that has been just called can e.g, freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assembler, names like `ebx` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
+A similar problem occurs in the assembler: here, also, a subroutine that has been just called can e.g. freely play with registers content, which often creates a need for restoring their previous values after exiting that subroutine. However, in the assembler, names like `ebx` always refer to _the same_ register, so — unless we care to “back up” the original value before calling a subroutine — that value could become prematurely and irreversibly lost. And here — just like for return addresses — the possibility of long call chains (and particularly recursion) makes the stack the only reasonable place for backing up the previous register values.  
 
 Moreover, while the abovementioned stack management of return addresses happens “automatically”, as a side effect of the `call` and `ret` instructions, it is generally a **programmer’s responsibility** to back up the general-purpose registers! As a result, the assembler code often contains — depending on the convention followed — whole “back-up sections” appearing either _just before_ or _just after_ making a subroutine call:
 
@@ -377,7 +377,7 @@ The key things here are to ensure that:
 
 The examples discussed so far did not include a typical initial example featured in programming courses — a program printing out “Hello World!” to the screen. That has a reason: there is no assembler program which would achieve this on an arbitrary operating system. Printing to the screen (and generally — the whole input/output communication) is realized with **system calls** (_syscalls_), i.e. special kinds of processor **interrupts** (described in the lecture “Processor and programs”) for which a handler has been defined to pass the control to the operating system code, to let the system take the necessary actions.  
 
-Similarly, the responsibility of operating system also includes managing memory allocations on the **heap** (which is significantly more difficult than for the stack, as the necessary memory size is not known upfront, and moreover, the unpredictable order of freeing up allocated data leads to “holes” of unused memory appearing, and operating system support is needed to “fill” them). Therefore, reserving and freeing up memory on the heap also requires making syscalls, and consequently, it looks significantly differently e.g, between Windows and Unix platforms.
+Similarly, the responsibility of operating system also includes managing memory allocations on the **heap** (which is significantly more difficult than for the stack, as the necessary memory size is not known upfront, and moreover, the unpredictable order of freeing up allocated data leads to “holes” of unused memory appearing, and operating system support is needed to “fill” them). Therefore, reserving and freeing up memory on the heap also requires making syscalls, and consequently, it looks significantly differently e.g. between Windows and Unix platforms.
 
 ### Bit-level operations  
 
@@ -393,9 +393,9 @@ In the assembler, the standard Boolean operator names typically represent bitwis
 
 will result in clearing (i.e. setting to zero) the sixth rightmost bit in register `eax` (and leaving all the other bits unchanged). The same action can be written even more concisely:
 
-`and ax, `<sup>~</sup>`32`
+`and ax,`<sup>~</sup>`32`
 
-where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation `0...00100000`, its bitwise negation gives exactly `1...11011111`).   
+where <sup>~</sup>32 denotes bitwise negation applied to the binary representation of the given number (as the number 32 has representation `0...00100000`, its bitwise negation gives exactly `1...11011111`).
 
 The above code may have a practical application. In the ASCII encoding (described on the lecture “Encoding data”), the uppercase characters differ from their lowercase counterparts only by the sixth rightmost bit value (e.g. `A` \= 65, `a` \= 97). Therefore, the above code just converts characters to their uppercase versions.  
 
@@ -429,7 +429,7 @@ Of course, there also exist other memory types, e.g. SSD and HDD drives, pendriv
 
 ## Types of primary memory  
 
-The main two memory properties, from the user viewpoint, are **capacity** and **speed** (understood as the time needed to reaching the data, but also the amount of data transferred in 1 second). Unfortunately, these two features are hard to combine, which is caused both by economy (faster memory is more expensive, so available in smaller amounts) and technology (e.g, to have a very quickly reachable cache, we need to place it very close to the MMU, and that puts a limit on its size).  
+The main two memory properties, from the user viewpoint, are **capacity** and **speed** (understood as the time needed to reaching the data, but also the amount of data transferred in 1 second). Unfortunately, these two features are hard to combine, which is caused both by economy (faster memory is more expensive, so available in smaller amounts) and technology (e.g. to have a very quickly reachable cache, we need to place it very close to the MMU, and that puts a limit on its size).  
 
 With respect to these two properties, the types of primary memory look as follows:  
 
@@ -476,11 +476,11 @@ During its evolution, DDR SDRAM has existed in the following configurations:
 * DDR4 SDRAM (bandwidth: from 12,800 MB/s to 25,600 MB/s);  
 * DDR5 SDRAM (bandwidth: from 25,600 MB/s to 57,600 MB/s);  
   
-Unlike cache, DDR SDRAM is a separate integrated circuit, which makes it possible to take it out from a computer and replace by another; often it’s also possible to extend the existing RAM modules with additional ones. However, there are some technical limitations here. Physically, the memory is inserted into the _motherboard_ which ensures communication between the computer components. Clearly, one cannot insert more RAM modules than the number of available memory ports. Another limitation comes from the processor, which is designed with an upper bound of supportable memory size. Also, not all processors / motherboards can support DDR4, Otherwise, a DDR4 module can be placed in a computer, though it will behave as DDR3 (which matters e.g, for the voltage input; DDR4 is capable of operating on a lower voltage, leading to reduced heat and increased performance).  
+Unlike cache, DDR SDRAM is a separate integrated circuit, which makes it possible to take it out from a computer and replace by another; often it’s also possible to extend the existing RAM modules with additional ones. However, there are some technical limitations here. Physically, the memory is inserted into the _motherboard_ which ensures communication between the computer components. Clearly, one cannot insert more RAM modules than the number of available memory ports. Another limitation comes from the processor, which is designed with an upper bound of supportable memory size. Also, not all processors / motherboards can support DDR4, Otherwise, a DDR4 module can be placed in a computer, though it will behave as DDR3 (which matters e.g. for the voltage input; DDR4 is capable of operating on a lower voltage, leading to reduced heat and increased performance).  
 
 The size of available RAM memory varies greatly across computers: in typical modern personal devices, it can range from a few up to hundreds of gigabytes.  
 
-An important characteristic of the processor and the motherboard is the number of **channels**. A _single-channel_ architecture means that RAM has only one connection (_channel_) with the processor. _Dual-channel_ means there are 2 such connections; the number of channels can be also 3, 4, or 8. Having more channels allows the processor to communicate simultaneously with more memory modules. Therefore, using e.g, two 4 GB modules will be more efficient than one 8 GB module. Benefitting from multi-channel transmission may, however, require ensuring that the modules used have the same manufacturer and/or capacity.  
+An important characteristic of the processor and the motherboard is the number of **channels**. A _single-channel_ architecture means that RAM has only one connection (_channel_) with the processor. _Dual-channel_ means there are 2 such connections; the number of channels can be also 3, 4, or 8. Having more channels allows the processor to communicate simultaneously with more memory modules. Therefore, using e.g. two 4 GB modules will be more efficient than one 8 GB module. Benefitting from multi-channel transmission may, however, require ensuring that the modules used have the same manufacturer and/or capacity.  
 
 ## Cache
 
@@ -500,7 +500,7 @@ Caches can generally work in various ways, depending on how we answer the follow
 
 * If the buffer is filled up, how should we choose an old value to replaced by the new one?  
 
-* How long does it take to find a requested value in the cache? 
+* How long does it take to find a requested value in the cache?
 
 * How much time do we lose in case of a cache **miss**?  
 (That is related to the difference between access times for _M_ and for _C_)
@@ -512,7 +512,7 @@ In the case of CPU cache, **speed** is the most important decision factor: check
 
 When talking about the CPU cache, **speed** is the key thing to think about. It's all about how quickly the CPU can check if certain information is in the cache, using as few steps as possible. Even if this quick check means it might miss finding the information sometimes, it's still worth it.
 
-This leads us to establish some _simplified_ rules for how things work (which we’ll make more detailed and clear shortly):” 
+This leads us to establish some _simplified_ rules for how things work (which we’ll make more detailed and clear shortly):”
 
 * The cache is an array of 2<sup>N</sup> **entries**, each of which contains some value from the RAM together with its source address.  
 
@@ -558,7 +558,7 @@ We have already came across segmentation in the lecture “On the assembler”.
 
 The memory assigned to a process is split into a few **segments**, whose specifications (starting address, size, access mode) are stored in the **segment descriptor table**. The **virtual address** — the one which can be used by an assembler programmer — consists of two parts:  
 
-* the **segment selector** (specifying that the desired value belongs e.g, to the code segment)  
+* the **segment selector** (specifying that the desired value belongs e.g. to the code segment)  
 
 * the **offset**, i.e. the index of the desired memory cell within that segment.  
 
@@ -630,6 +630,4 @@ The above paragraph contains multiple simplifications but it (hopefully) shows t
 
 Note that the main idea of caching — moving data between a larger slower memory (_M_) and a smaller faster one (_C_) — does take place also in case of virtualization: this time, RAM plays the role of _C_, and _M_ is the secondary memory. Yet, despite this apparent similarity, virtualization is not a special case of caching.  
 
-The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those processess) at the cost of efficiency.  
-
-
+The purpose of caching is _accelerating_ the access to memory _M_, by introducing _C_ as a buffer. This affects just the efficiency; no cache would mean working just with _M_, which would be slower but would still work. The case of virtualization is different: the data in _M_ (on a hard drive) are useless unless they are fetched to smaller memory _C_ (RAM), and the goal of the whole mechanism is to improve _scalability_ of the system (i.e. enable executing more processes at a time, and assigning a larger total amount of memory to those processess) at the cost of efficiency.

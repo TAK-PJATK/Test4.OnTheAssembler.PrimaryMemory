@@ -1,4 +1,4 @@
-# Test 4. On the assembler & Primary memory  
+# Test 4. On the assembler & Primary memory
 
 [On the assembler](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/README.md#on-the-assembler)
 [:link:](https://github.com/TAK-PJATK/Test4.OnTheAssembler.PrimaryMemory/blob/main/on_the_assembler.pdf)  
@@ -421,13 +421,13 @@ The operations described above also have counterparts in higher-level languages 
 
 More strictly, it may happen that the number N will not be interpreted directly as a logical address (the cell index in the process address space) but as a relative address to some base address (e.g. the beginning of the data segment). This, however, has no impact on our considerations in the following part of this lecture.
 
-# Primary memory  
+# Primary memory
   
 Computer memory is not uniform. In this lecture, we will discuss these types of memory which are fundamental from the viewpoint of the modem architecture (x86); they are used while executing _every_ program. Besides the processor registers (already well known to us), these include: cache and RAM. Altogether, they’re called **primary storage** (or _primary memory_), though both terms are also used to describe the RAM layer alone.  
   
 Of course, there also exist other memory types, e.g. SSD and HDD drives, pendrives, DVD discs etc. These form the so-called **secondary** (or _external_) **memory**, which will be discussed in a later lecture. Unlike the primary memory, it is not available to the processor directly, but via the input/output interfaces. It’s also not strictly _necessary_ for executing _every_ program, though it’s an important component of every personal computer, as all kinds of **non-volatile memory** (keeping its content even after losing electric power) belong to the secondary memory.  
 
-## Types of primary memory  
+## Types of primary memory
 
 The main two memory properties, from the user viewpoint, are **capacity** and **speed** (understood as the time needed to reaching the data, but also the amount of data transferred in 1 second). Unfortunately, these two features are hard to combine, which is caused both by economy (faster memory is more expensive, so available in smaller amounts) and technology (e.g. to have a very quickly reachable cache, we need to place it very close to the MMU, and that puts a limit on its size).  
 

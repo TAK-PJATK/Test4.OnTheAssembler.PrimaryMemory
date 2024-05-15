@@ -61,7 +61,7 @@ MS Copilot:
     - The value of `ecx` is then set to 2, and `our_double_printer` is called (which in turn calls `our_printer` twice).
     - Finally, the value of `ecx` is set to 3, and `our_printer` is called again.
 
-Without the omitted details, it's challenging to provide a precise understanding of the program's purpose. However, based on what we have, it seems to involve printing values to the screen using the `ecx` register. If you have any specific questions or need further clarification, feel free to ask! 😊
+Without the omitted details, it's challenging to provide a precise understanding of the program's purpose. However, based on what we have, it seems to involve printing values to the screen using the `ecx` register.
 
 20. `call our_printer`: This instruction calls the `our_printer` subroutine, which prints the value of the `ecx` register (3) to the screen.
 

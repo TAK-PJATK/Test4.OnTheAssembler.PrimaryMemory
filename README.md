@@ -59,7 +59,7 @@ The above code contains registers `eax`, `ebx`, `ecx`, and the following instruc
 
 * `imul` _X Y_: mutliples the values of _X_ and _Y_, and stores the result back into _X_,
 
-Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument, (Caution — in some other assemblers, that role is played by the last argument).
+Generally, the convention in NASM syntax is an arithmetic operation stores its result in the register given as its first argument. (Caution — in some other assemblers, that role is played by the last argument).
 
 This means that the above code corresponds to the following code in Java (or C++):
 
